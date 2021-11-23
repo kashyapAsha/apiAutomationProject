@@ -1,0 +1,38 @@
+package com.apiTesting.apiConfig;
+
+import org.testng.Assert;
+
+import com.apiTesting.base.Base;
+import com.aventstack.extentreports.Status;
+
+import io.restassured.response.Response;
+
+public class ApiVerification extends Base {
+	
+	
+	public static void responseCodeValidation(Response response, int statusCode) {
+		try {
+			Assert.assertEquals(response.getStatusCode(), statusCode, "Not getting expected status code");
+			test.log(Status.PASS,
+					"Successfully validdated status code, status code is :: " + response.getStatusCode());
+		} catch (AssertionError e) {
+			test.log(Status.FAIL, e.fillInStackTrace());
+			test.log(Status.FAIL,
+					"Expected status code is :: " + statusCode + " , instead of getting :: " + response.getStatusCode());
+			e.printStackTrace();
+		}catch (Exception e) {
+			test.log(Status.FAIL, e.fillInStackTrace());
+	}
+}
+	
+	public static void responseTimeValidation(Response response) {
+		try {
+			long time=response.time();
+			test.log(Status.INFO, "Api response time is :: " + time);
+		} catch (Exception e) {
+			test.log(Status.FAIL, e.fillInStackTrace());
+		}
+	}
+	
+	
+}

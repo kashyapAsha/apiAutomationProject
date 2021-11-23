@@ -1,0 +1,563 @@
+package com.til.colombia.expresso.pageobjects.qa;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import com.til.colombia.expresso.pageobjects.CommonPageObjects;
+import com.til.colombia.expresso.pageobjects.prod.LoginPage;
+import com.til.colombia.expresso.utility.ReadPropertyFile;
+
+public class DiscountApprovalPageObject extends CommonPageObjects{
+	
+	String ordersTab = ReadPropertyFile.getElementFromPropertyFile("orders_tab");
+	String editOrdersBtn = ReadPropertyFile.getElementFromPropertyFile("edit_order_btn");
+	String createProposal = ReadPropertyFile.getElementFromPropertyFile("create_proposal");
+	String newProposalHeaderText = ReadPropertyFile.readFromPropertyFile("new_Proposal_Header_Text").trim();
+	String agencyRadio = ReadPropertyFile.getElementFromPropertyFile("agencyRadio_daf");
+	String proposalField = ReadPropertyFile.getElementFromPropertyFile("proposalType_daf");
+	String proposalTypeInput = ReadPropertyFile.getElementFromPropertyFile("proposalTypeInput_daf");
+	String invoicingFrom = ReadPropertyFile.getElementFromPropertyFile("invoicingFrom_daf");
+	String invoicingFromInput = ReadPropertyFile.getElementFromPropertyFile("invoicingFromInput_daf");
+	String sapBU = ReadPropertyFile.getElementFromPropertyFile("sapBU_daf");
+	String sapBUInput = ReadPropertyFile.getElementFromPropertyFile("sapBUInput_daf");
+	String advertiser = ReadPropertyFile.getElementFromPropertyFile("advertiser_daf");
+	String advertiserInput = ReadPropertyFile.getElementFromPropertyFile("advertiserInput_daf");
+	String closureDate = ReadPropertyFile.getElementFromPropertyFile("closureDate_daf");
+	String brand = ReadPropertyFile.getElementFromPropertyFile("brand_daf");
+	String addPackageBtn = ReadPropertyFile.getElementFromPropertyFile("addPackageBtn_daf");
+	String packagePricing = ReadPropertyFile.getElementFromPropertyFile("packagePricing_daf");
+	String packagePricingInput = ReadPropertyFile.getElementFromPropertyFile("packagePricingInput_daf");
+	String packageFilterBtn = ReadPropertyFile.getElementFromPropertyFile("packageFilterBtn_daf");
+	String selectOption = ReadPropertyFile.getElementFromPropertyFile("selectOption_daf");
+	String event = ReadPropertyFile.getElementFromPropertyFile("event_daf");
+	String eventInput= ReadPropertyFile.getElementFromPropertyFile("eventInput_daf");
+	String sold = ReadPropertyFile.getElementFromPropertyFile("sold_daf");
+	String geoGroup = ReadPropertyFile.getElementFromPropertyFile("geoGroup_daf");
+	String saveBtn = ReadPropertyFile.getElementFromPropertyFile("saveBtn_daf");
+	String impressionUnits = ReadPropertyFile.getElementFromPropertyFile("impressionUnits_daf");
+	String saveProposalOrder = ReadPropertyFile.getElementFromPropertyFile("saveProposalOrder_daf");
+	String createOrderBtn = ReadPropertyFile.getElementFromPropertyFile("createOrderBtn_daf");
+	String submitBtn= ReadPropertyFile.getElementFromPropertyFile("submitBtn_daf");
+	String roRef = ReadPropertyFile.getElementFromPropertyFile("roRef_daf");
+	String campaignName = ReadPropertyFile.getElementFromPropertyFile("campaignName_daf");
+	String roReceiveDate = ReadPropertyFile.getElementFromPropertyFile("roReceiveDate_daf");
+	String attachFileBtn = ReadPropertyFile.getElementFromPropertyFile("attachFileBtn_daf");
+	String saveROBtn = ReadPropertyFile.getElementFromPropertyFile("saveROBtn_daf");
+	String agencyField = ReadPropertyFile.getElementFromPropertyFile("agencyField_daf");
+	String agencyFieldInput = ReadPropertyFile.getElementFromPropertyFile("agencyFieldInput_daf");
+	String rateCard = ReadPropertyFile.getElementFromPropertyFile("rateCard_daf");
+	String profileIcon = ReadPropertyFile.getElementFromPropertyFile("profileIcon_daf");
+	String logoutLink = ReadPropertyFile.getElementFromPropertyFile("logoutLink_daf");
+	String approvalWindowComment = ReadPropertyFile.getElementFromPropertyFile("approvalWindowComment_daf");
+	String approvalWindowBtn = ReadPropertyFile.getElementFromPropertyFile("approvalWindowBtn_daf");
+	String rejectWindowBtn = ReadPropertyFile.getElementFromPropertyFile("rejectWindowBtn_daf");
+	String editProposalBtn = ReadPropertyFile.getElementFromPropertyFile("editProposalBtn_daf");
+	String submitApprovalBtn = ReadPropertyFile.getElementFromPropertyFile("submit_approval_btn");
+	String approvalStatus = ReadPropertyFile.getElementFromPropertyFile("approval_detail");
+	String homeTab = ReadPropertyFile.getElementFromPropertyFile("home_tab");
+	String consentMsg = ReadPropertyFile.getElementFromPropertyFile("consent_message");
+	String acceptBtn = ReadPropertyFile.getElementFromPropertyFile("accept_btn");
+	String dialogOK = ReadPropertyFile.getElementFromPropertyFile("modalDialog_btn");
+	String createValueAddBtn = ReadPropertyFile.getElementFromPropertyFile("create_value_add_btn");
+	String commercialField = ReadPropertyFile.getElementFromPropertyFile("commercial_dd");
+	String financeField = ReadPropertyFile.getElementFromPropertyFile("finance_dd");
+	String csField = ReadPropertyFile.getElementFromPropertyFile("cs_user_dd");
+	String comFinCSDDInput = ReadPropertyFile.getElementFromPropertyFile("commercial_finance_cs_dd_input");
+	String alertMsg = ReadPropertyFile.getElementFromPropertyFile("alert_msg");
+	String recallBtn = ReadPropertyFile.getElementFromPropertyFile("recall_btn");
+	String attachmentPath = ReadPropertyFile.readFromPropertyFile("attachment_path");
+	String userApprovalStatus = ReadPropertyFile.getElementFromPropertyFile("user_approval_status");
+	String valueAddApproval = ReadPropertyFile.getElementFromPropertyFile("value_add_approval_status");
+	List<String> arrayRoleName = new ArrayList<String>();
+	List<Integer> arrayRoleID = new ArrayList<Integer>();
+	List<Double> arrayRolePercent = new ArrayList<Double>();
+	String discURL, urlForSH;
+	List<String> user_roles;
+	
+	public boolean verifyLogin()
+	{
+		boolean flag = false;
+		String percent,roleID;
+		
+		if(loginAsRole("0 Level"))
+			flag = true;
+		
+		List<String> result = getDBCompleteResult("disc_limit");
+		
+		for(String str : result)
+		{
+			percent = str.substring(str.indexOf(':')+1,str.length());
+			arrayRolePercent.add(Double.parseDouble(percent));
+			
+			roleID = str.substring(0,str.indexOf('-'));
+			arrayRoleID.add(Integer.parseInt(roleID));
+			
+			str = str.substring(str.indexOf('-')+1, str.indexOf(':'));
+			arrayRoleName.add(str);
+		}
+		
+		user_roles = getDBCompleteResult("user_role_id");
+		if(user_roles.size()>1)
+			System.out.println("User has more than 1 matching role - "+user_roles);
+		
+		if(flag)
+		{
+			LOGGER.info("***Discount_Approval****Successfully logged in as SALES EXECUTIVE");
+			LOGGER.info("***Discount_Approval****arrayRolePercent = "+arrayRolePercent);
+			LOGGER.info("***Discount_Approval****arrayRoleID = "+arrayRoleID);
+			LOGGER.info("***Discount_Approval****arrayRoleName = "+arrayRoleName);
+		}
+		
+		return flag;
+	}
+
+	public boolean verifyApprovalStatus(String direcAgenc, String propType, String discount)
+	{
+		boolean flag = false;
+		
+		if(!System.getProperty("env").equals("ROLE_SALES_EXEC"))
+			loginAsRole("0 Level");
+		
+		if(discount.equalsIgnoreCase("ValueAdditionAtOrder"))
+		{
+			driver.get(discURL);
+			if(!isWebElementPresent(createOrderBtn, 1))
+				driver.get(urlForSH);
+			
+			if(proceedForOrderCreation())
+				performClickElement(editOrdersBtn);
+			
+		}
+		else
+			initiateProposal(direcAgenc,propType);
+
+		addPackage("Cost Per Day",discount);
+		addPackage("CPM",discount);
+		addPackage("Cost Per Unit",discount);
+		
+		performClickElement(saveProposalOrder);
+		
+		checkModalDialog();
+		
+		discURL = driver.getCurrentUrl();
+		
+		if(direcAgenc.equalsIgnoreCase("Direct") && discount.equalsIgnoreCase("No Limit"))
+			urlForSH = discURL;
+		
+		performClickElement(submitApprovalBtn);
+		
+		if(discount.contains("Above") && getAttribute(approvalStatus, "text").contains("Pending"))
+			flag = true;
+		else if(!discount.contains("SALES_EXEC") && getAttribute(approvalStatus, "text").contains("Pending"))
+			flag = true;
+		else if(getAttribute(approvalStatus, "text").contains("Approved"))
+			flag=true;
+		else if(discount.equals("ValueAdditionAtOrder"))
+		{
+			if(isWebElementPresent(approvalWindowComment, 1))
+				flag = false;
+			else
+				flag = true;
+		}
+		
+		LOGGER.info("***Discount_Approval****Discount = "+discount+" ****Approval Status = "+getAttribute(approvalStatus, "text")+" *** FLAG = "+flag);
+		
+		return flag;
+	}
+	
+	public boolean initiateProposal(String direcAgenc, String proposalType)
+	{
+		boolean flag = false;
+		int counter = 0;
+		String propType="Client Domestic";
+		String currency="INR";
+		wait = elementUtility.getWebDriverWait(driver);
+		if(proposalType.contains("International"))
+		{
+			propType = "Client International";
+			currency = proposalType.substring(proposalType.indexOf("_")+1, proposalType.length());
+		}
+		else
+			propType = proposalType;
+		
+		do
+		{
+			pageRefresh();
+			openProposalPage();
+			
+			if(direcAgenc.equalsIgnoreCase("Agency"))
+			{
+				performClickElement(agencyRadio);
+				performClickElement(agencyField);
+				if(!currency.equals("INR"))
+					sendKeys(agencyFieldInput, "Cricket Acquisition");
+				else
+					sendKeys(agencyFieldInput, "Mediacom");
+			}
+			performClickElement(proposalField);
+			sendKeys(proposalTypeInput, propType);
+			performClickElement(invoicingFrom);
+			sendKeys(invoicingFromInput,"TIL");
+			//performClickElement(advertiser);
+			
+			
+			sleep(2000);
+			
+			if(propType.equals("In House"))
+				sendKeys(advertiserInput, "Test Fida");
+			else if(direcAgenc.equalsIgnoreCase("Direct") && currency.equalsIgnoreCase("USD"))
+				sendKeys(advertiserInput,"Agency USD");
+			else
+				sendKeys(advertiserInput, "Test Ankur21");
+			
+			//performClickElement(closureDate);
+			wait.until(ExpectedConditions.presenceOfElementLocated(elementUtility.findElement(advertiser))).click();
+			sleep(2000);
+			pressEnter();
+			sendKeys(brand,"TestBrand "+propType);
+			
+			performClickElement(addPackageBtn);
+			checkModalDialog();
+			
+			if(driver.getCurrentUrl().contains("expresso/addPackageLineitem.htm"))
+				flag = true;
+			
+			counter++;
+		}while(counter<2 && !flag);
+		
+		LOGGER.info("***Discount_Approval****Method Initiate Proposal, FLAG = "+flag+" ***Direct/Agency = "+direcAgenc);
+		LOGGER.info("***Discount_Approval****Proposal Type = "+propType+" ***URL = "+driver.getCurrentUrl());
+		
+		return flag;
+	}
+	
+	public void openProposalPage()
+	{
+		if(!isWebElementPresent(createProposal, 1))
+			performClickElement(ordersTab);
+		performClickElement(createProposal);
+	}
+	
+	public void addPackage(String pricingType,String checkDiscount)
+	{
+		if(isWebElementPresent(addPackageBtn, 1))
+			performClickElement(addPackageBtn);
+		checkModalDialog();
+		
+		performClickElement(packagePricing);
+		sendKeys(packagePricingInput, pricingType);
+		performClickElement(packageFilterBtn);
+		performClickElement(selectOption);
+		
+		fillPackageDetails(checkDiscount);
+	}
+	
+	public void fillPackageDetails(String discount)
+	{
+		String soldValue = "999999";
+		
+		performClickElement(event);
+		sendKeys(eventInput,"Regular");
+		selectByVisibleText(geoGroup, "India");
+
+		if(isWebElementPresent(impressionUnits, 1))
+			sendKeys(impressionUnits, "10");
+		
+		if(!discount.equalsIgnoreCase("No Limit") && !discount.contains("ValueAddition"))
+			soldValue = getPackageSoldAmt(discount);
+		
+		if(discount.contains("ValueAddition"))
+			soldValue = "0";
+		
+		sendKeys(sold, soldValue);
+		
+		if(discount.contains("ValueAddition"))
+			performClickElement(createValueAddBtn);
+		else
+			performClickElement(saveBtn);
+	}
+	
+	public String getPackageSoldAmt(String discountLimit)
+	{
+		double giveDiscount = 0.01;
+		double[] userLimit = new double[2];
+		String actualRate = getAttribute(rateCard, "Text");
+		String soldFor = actualRate.substring(0,actualRate.indexOf(" "));
+		double val = Double.parseDouble(soldFor);
+		
+		String role = discountLimit.substring(discountLimit.indexOf(" ")+1,discountLimit.lastIndexOf(" "));
+		userLimit = getUserLimit(role);
+	
+		if(discountLimit.contains("Within") && (!discountLimit.contains("SALES_EXEC")))
+			giveDiscount = userLimit[0]+0.2;
+		else if(discountLimit.contains("Equal") && (!discountLimit.contains("ROLE_COO")))
+			giveDiscount = userLimit[1];
+		else if(discountLimit.contains("Above"))
+			giveDiscount = userLimit[1]*1.1;
+		
+		double divFactor = 100/giveDiscount;
+
+		if(discountLimit.contains("Equal") && (discountLimit.contains("ROLE_COO")))
+			soldFor = "1";
+		else
+			soldFor = String.valueOf(val - (val/divFactor));
+		
+		LOGGER.info("***Discount_Approval**** For Role - "+role+" *** Discount Given = "+giveDiscount+" *** Above/Within/Equal - "+discountLimit);
+		
+		return soldFor;
+	}
+	
+	public double[] getUserLimit(String role)
+	{
+		String roleName;
+		double[] minMaxLimit = new double[2];
+		
+		int user_role_id = Integer.parseInt(user_roles.get(0));
+		int id = arrayRoleID.indexOf(user_role_id);
+		
+		if(role.equalsIgnoreCase("SALES_EXEC"))
+			roleName = "ROLE_SALES_EXEC";
+		else if(role.equalsIgnoreCase("SALES_MGR"))
+			roleName = "ROLE_SALES_MGR";
+		else if(role.equalsIgnoreCase("NATIONAL_HEAD"))
+			roleName = "ROLE_SALES_NATIONAL_HEAD";
+		else if(role.equalsIgnoreCase("SALES_HEAD"))
+			roleName = "ROLE_SALES_HEAD";
+		else
+			roleName = "ROLE_COO";
+		
+		id = arrayRoleName.indexOf(roleName);
+		
+		if(id == 0)
+			minMaxLimit[0] = 0;
+		else
+			minMaxLimit[0] = arrayRolePercent.get(id-1);
+		
+		minMaxLimit[1] = arrayRolePercent.get(id);
+		
+		return minMaxLimit;
+	}
+	
+	public void signOut()
+	{
+		if(!isWebElementPresent(profileIcon, 1))
+		{
+			performClickElement(ordersTab);
+			performClickElement(createProposal);
+		}
+		performClickElement(profileIcon);
+		driver.switchTo().activeElement();
+		performClickElement(logoutLink);
+		
+		LOGGER.info("***Discount_Approval**** Sign Out Role = "+System.getProperty("env"));
+	}
+	
+	public boolean signIn(String role)
+	{
+		boolean flag = false;
+		System.setProperty("env", role);
+		
+		try {
+			new LoginPage().login();
+			if(isWebElementPresent(consentMsg,1))
+			{
+				performClickElement(consentMsg);
+				performClickElement(acceptBtn);
+			}
+			if(isWebElementPresent(homeTab, 1))
+				flag = true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(flag)
+			LOGGER.info("***Discount_Approval**** Sign IN Role = "+System.getProperty("env"));
+		
+		return flag;
+	}
+	
+	public boolean verifyApprovalWindow(String level, String expectation)
+	{
+		boolean flag = false;
+		
+		loginAsRole(level);
+			
+		if(expectation.equals("No Window"))
+		{	if(!isWebElementPresent(approvalWindowComment, 1))
+				flag = true;
+		}	
+		else
+		{
+			if(isWebElementPresent(approvalWindowComment, 1))
+				flag = true;
+		}
+		
+		LOGGER.info("***Discount_Approval**** Approval Window, Expectation = "+expectation+" **** flag = "+flag);
+		
+		return flag;
+	}
+	
+	public String nextRole(String nextLevel)
+	{
+		String nextRole="";
+		String role = "ROLE_SALES_EXEC";
+		int id,next;
+		
+		id = arrayRoleName.indexOf(role);
+		if(nextLevel.contains("Up"))
+		{
+			next = Integer.parseInt(nextLevel.substring(0, nextLevel.indexOf(" ")));
+			nextRole = arrayRoleName.get(id+next);
+		}
+		else if(nextLevel.contains("Down"))
+		{
+			next = Integer.parseInt(nextLevel.substring(0, nextLevel.indexOf(" ")));
+			nextRole = arrayRoleName.get(id-next);
+		}
+		else if(nextLevel.contains("0"))
+			nextRole = role;
+		else if(nextLevel.contains("VA_Anil"))
+			nextRole = "Sales_Director";
+		
+		return nextRole;
+	}
+	
+	public boolean resubmitProposal()
+	{
+		boolean flag = false;
+		
+		driver.get(discURL);
+		if(performClickElement(editProposalBtn))
+			if(performClickElement(saveProposalOrder))
+			{
+				checkModalDialog();
+				if(performClickElement(submitApprovalBtn))
+					if(getAttribute(approvalStatus, "text").contains("Pending"))
+						flag = true;
+			}
+				
+		LOGGER.info("***Discount_Approval**** Resubmit Proposal URL = "+discURL);
+		
+		return flag;
+	}
+	
+	public boolean giveApproval(String level, String expectedState)
+	{
+		boolean flag = false;
+		
+		loginAsRole(level);
+		
+		if(expectedState.equalsIgnoreCase("SH_Pending"))
+		{
+			driver.get(urlForSH);
+			performClickElement(editOrdersBtn);
+			
+			addPackage("Cost Per Unit","ValueAddition");
+			performClickElement(saveProposalOrder);
+			checkModalDialog();
+			discURL = driver.getCurrentUrl();
+			
+			performClickElement(submitApprovalBtn);
+			if(!isWebElementPresent(approvalWindowComment, 1))
+				flag = true;
+		}
+		
+		if(getAttribute(approvalStatus, "text").contains("Pending") && isWebElementPresent(approvalWindowComment, 1))
+		{
+			sendKeys(approvalWindowComment, "Approved");
+			performClickElement(approvalWindowBtn);
+			pageRefresh();
+			if(getAttribute(approvalStatus, "text").contains(expectedState))	
+				flag = true;
+			else
+				if(performClickElement(userApprovalStatus))
+					if(isWebElementPresent(valueAddApproval, 1))
+						if(getAttribute(valueAddApproval, "text").contains(expectedState))
+							flag = true;
+		}
+		
+		LOGGER.info("***Discount_Approval**** Give Approval, LEVEL = "+level+" *** Expected State = "+expectedState+" *** Actual State = "+getAttribute(approvalStatus, "text"));
+		
+		return flag;
+	}
+	
+	public boolean rejectApproval()
+	{
+		boolean flag = false;
+		String currentRole="";
+		int loginID=0;
+		
+		if(getAttribute(approvalStatus, "text").contains("Pending") && isWebElementPresent(approvalWindowComment, 1))
+		{
+			sendKeys(approvalWindowComment, "Rejected");
+			performClickElement(rejectWindowBtn);
+			if(getAttribute(approvalStatus, "text").contains("Reject"))
+				flag = true;
+			if(flag)
+			{
+				currentRole = System.getProperty("env");
+				int currentID = arrayRoleName.indexOf(currentRole);
+				loginAsRole("0 Level");
+				resubmitProposal();
+				signOut();
+				
+				while(loginID!=(currentID-1))
+				{
+					loginID = loginID+1;
+					giveApproval(loginID+" Level Up","Pending");
+					signOut();
+				}
+				
+				signIn(currentRole);
+				driver.get(discURL);
+			}
+		}
+		
+		return flag;
+	}
+	
+	public boolean loginAsRole(String level)
+	{
+		boolean flag = false;
+		String role = nextRole(level);
+		
+		if(!System.getProperty("env").equals(role))
+		{
+			if(isWebElementPresent(ordersTab, 1))
+				signOut();
+			signIn(role);
+			
+			if(discURL!=null)
+				driver.get(discURL);
+		}
+		
+		flag = true;
+		
+		return flag;
+	}
+	
+	public void checkModalDialog()
+	{
+		sleep(2000);
+		if(isWebElementPresent(dialogOK, 1))
+		{
+			performClickElement(dialogOK);
+		}
+	}
+	
+	public boolean proposalToOrder()
+	{
+		boolean flag = false;
+		
+		loginAsRole("0 Level");
+		driver.get(urlForSH);
+		if(proceedForOrderCreation())
+			flag = true;
+		
+		return flag;
+	}
+	
+}

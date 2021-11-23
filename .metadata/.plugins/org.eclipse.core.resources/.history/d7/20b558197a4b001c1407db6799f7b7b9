@@ -1,0 +1,29 @@
+package com.apiTesting.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.testng.annotations.Test;
+
+import com.apiTesting.apiConfig.ApiPath;
+import com.apiTesting.base.Base;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class SeconTest extends Base {
+	@Test
+	public void getAccessToken() {
+		String baseURL=readFromPropertyFile("baseUrl");
+		String url=baseURL+ApiPath.Post_Generate_Token;
+		Response re= RestAssured.given().queryParams("grant_type", "password")
+				.param("username", "mukul.shishodia")
+				.param("password", "google#123")
+				.auth().basic("colombia-1","secret")
+				.log().all().post(url);
+		re.prettyPrint();
+		String token = re.jsonPath().get("access_token");
+		System.out.println("token is="+token);
+	}
+
+}

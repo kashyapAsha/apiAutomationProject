@@ -1,0 +1,28 @@
+package com.apiTesting.Test;
+import org.testng.annotations.Test;
+
+import com.apiTesting.apiConfig.ApiPath;
+import com.apiTesting.apiConfig.ApiVerification;
+import com.apiTesting.apiConfig.HttpMethods;
+import com.apiTesting.base.Base;
+import com.aventstack.extentreports.Status;
+
+//import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class FirstTest extends Base {
+	
+	@Test
+	public void verifySingleUser() {
+		//test = reports.createTest("verify user");
+		test.log(Status.INFO, "My test is starting......");
+		
+		String baseURL=readFromPropertyFile("url");
+		//Response re=RestAssured.given().when().get(baseURI+ApiPath.Get_Single_user);
+		String url=baseURL+ApiPath.Get_Single_user;
+		Response re= HttpMethods.getWithoutParam(url);
+		re.prettyPrint();
+		ApiVerification.responseCodeValidation(re, 200);	
+	}
+
+}

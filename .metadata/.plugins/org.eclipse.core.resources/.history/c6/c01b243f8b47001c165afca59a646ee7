@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Expresso Sanity">
+	<listeners>
+		<listener class-name="com.til.colombia.expresso.listeners.ScreenShot" />
+		<listener class-name="com.til.colombia.expresso.listeners.ResultExcelReportListener" />
+		<listener class-name="com.til.colombia.expresso.listeners.ExtentListener"/>
+        <listener class-name="com.til.colombia.expresso.listeners.AnnotationTransformer"/>
+	</listeners>
+	<test name="Expresso Sanity" enabled="true">
+		<classes>
+	 
+		     <class name="com.til.colombia.expresso.test.sanity.Dashboard" /> 
+	       <!--  <class name="com.til.colombia.expresso.test.sanity.Orders" /> -->
+			<!--  <class name="com.til.colombia.expresso.test.sanity.CreditManager" /> -->
+			<!--  <class name="com.til.colombia.expresso.test.sanity.Contracts" />-->
+			<!--  <class name="com.til.colombia.expresso.test.sanity.OperationReport" />-->
+			<!-- <class name="com.til.colombia.expresso.test.sanity.BusinessInsightReport" /> -->
+			<!--  <class name="com.til.colombia.expresso.test.sanity.RevenueReport" />-->
+		   <!-- 	<class name="com.til.colombia.expresso.test.sanity.SapReport" /> -->
+			<!--  <class name="com.til.colombia.expresso.test.sanity.AdminOrganisation" /> -->
+			<!--  <class name="com.til.colombia.expresso.test.sanity.AdminClient" />-->
+			<!-- <class name="com.til.colombia.expresso.test.sanity.AdminPricing" />  -->
+			<!--  <class name="com.til.colombia.expresso.test.sanity.AdminSiteStructure" /> -->
+
+		</classes>
+	</test>
+
+</suite>

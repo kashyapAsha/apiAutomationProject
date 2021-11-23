@@ -1,0 +1,330 @@
+package com.til.colombia.expresso.pageobjects.prod;
+
+import static org.testng.Assert.fail;
+import java.util.List;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Reporter;
+import com.til.colombia.expresso.pageobjects.CommonPageObjects;
+import com.til.colombia.expresso.utility.ReadPropertyFile;
+
+public class OrdersPageObjects extends CommonPageObjects {
+	String ordersTab = ReadPropertyFile.getElementFromPropertyFile("orders_tab");
+	String allOrderTab = ReadPropertyFile.getElementFromPropertyFile("all_orders");
+	String client = ReadPropertyFile.readFromPropertyFile("all_orders_client");
+	String ordersIdentifier = ReadPropertyFile.getElementFromPropertyFile("orders_identidier");
+	String clientInputBox = ReadPropertyFile.getElementFromPropertyFile("client_input_ordertab");
+	// Added by Mukul
+	String roDropdown = ReadPropertyFile.getElementFromPropertyFile("ro_dropdown");
+	String roDropdownValue = ReadPropertyFile.getElementFromPropertyFile("ro_dropdown_value");
+	String CampValue = ReadPropertyFile.readFromPropertyFile("camp_value");
+	//End here
+	String CampOrderValue = ReadPropertyFile.readFromPropertyFile("camp_order_value");
+	String CampPropValue = ReadPropertyFile.readFromPropertyFile("camp_prop_value");
+	String clientDropMask = ReadPropertyFile.getElementFromPropertyFile("client_drop_mask");
+	String filterBtn = ReadPropertyFile.getElementFromPropertyFile("filter_btn_orders");
+	String contentIdentifier = ReadPropertyFile.getElementFromPropertyFile("content");
+	String campaignHeaderText = ReadPropertyFile.readFromPropertyFile("campaign_header").trim();
+	String orderHeaderText = ReadPropertyFile.readFromPropertyFile("order_header").trim();
+	String proposalHeaderText = ReadPropertyFile.readFromPropertyFile("proposal_header").trim();
+	String invoiceText = ReadPropertyFile.readFromPropertyFile("invoice_page");
+	String invoiceTab = ReadPropertyFile.getElementFromPropertyFile("invoice_tab");
+	String salesUserBox = ReadPropertyFile.getElementFromPropertyFile("sales_user_box");
+	String salesInputIdentifier = ReadPropertyFile.getElementFromPropertyFile("invoice_sales_user_input");
+	String invoicesIdentifier = ReadPropertyFile.getElementFromPropertyFile("invoices");
+	String invoiceLink = ReadPropertyFile.getElementFromPropertyFile("invoice_link");
+	String salesUser = ReadPropertyFile.readFromPropertyFile("sales_user");
+	String viewIRO=ReadPropertyFile.getElementFromPropertyFile("view_iro");
+	String marketingLead=ReadPropertyFile.getElementFromPropertyFile("marketing_lead");
+	String marketingLeadHeader=ReadPropertyFile.getElementFromPropertyFile("marketing_lead_header");
+	String orderDetail=ReadPropertyFile.getElementFromPropertyFile("order_details");
+	String orderDetailHeader=ReadPropertyFile.getElementFromPropertyFile("order_details_header");
+	String paymentDetail=ReadPropertyFile.getElementFromPropertyFile("payment_details");
+	String resetBtn=ReadPropertyFile.getElementFromPropertyFile("reset_inv_btn");
+	String viewOrderResetBtn=ReadPropertyFile.getElementFromPropertyFile("view_order_reset_btn");
+	String marketingLeadHead=ReadPropertyFile.readFromPropertyFile("marketing_Lead_Header");
+	String orderDetailHead=ReadPropertyFile.readFromPropertyFile("order_Detail_Header");
+	String paymentDetailHead=ReadPropertyFile.readFromPropertyFile("payment_Detail_Header");
+	String invCountAmt = ReadPropertyFile.getElementFromPropertyFile("invoice_count_amount");
+	
+/*Pallav: 
+ * Changes begin for method "verifyLandingPage()"
+ * Invoice Delivery Month Begins
+*/	String selectDeliveryMonth = ReadPropertyFile.getElementFromPropertyFile("select_Delivery_Month");
+	String deliveryMonthInputBox = ReadPropertyFile.getElementFromPropertyFile("delivery_month_input");
+	String filterInv = ReadPropertyFile.getElementFromPropertyFile("filter_Inv_btn");
+//	Changes Ends for "verifyLandingPage()"	
+
+	static String linksXpath;
+
+	/**
+	 * Verifies orders are populated after applying filter
+	 * 
+	 * @return no of orders
+	 * @throws InterruptedException
+	 */
+	public boolean verifyFilter() throws InterruptedException {
+		wait = elementUtility.getWebDriverWait(driver);
+		performClickElement(ordersTab);
+		performClickElement(allOrderTab);
+		performClickElement(viewOrderResetBtn);
+		enterClientAndSearch();
+		return checkOrders();
+	}
+
+	/**
+	 * Count no of order displayed after applying filter
+	 * 
+	 * @return -Count of order
+	 */
+	private boolean checkOrders() {
+		int count = waitUntilElementsPresenceLocated(ordersIdentifier).size();
+		if (count > 0) {
+			Reporter.log("No of order populated in more than 0 . Count  :" + count);
+
+		} else {
+			Reporter.log("No of order populated is  . Count  :" + count);
+		}
+		return count > 0;
+
+	}
+
+	/**
+	 * Enters client and applies filter
+	 * 
+	 * @throws InterruptedException
+	 */
+	private void enterClientAndSearch() throws InterruptedException {
+		wait = elementUtility.getWebDriverWait(driver);
+		performClickElement(clientDropMask);
+		sendKeys(clientInputBox, client);
+		//Added by mukul 
+		performClickElement(roDropdown);
+		sendKeys(roDropdownValue,CampValue);
+		//End here
+		performClickElement(filterBtn);
+	}
+
+	/**
+	 * Verifies landing page after clicking campaign link
+	 * 
+	 * @return true or false
+	 * @throws InterruptedException
+	 */
+	public boolean verifyLandingpageCampaign() throws InterruptedException {
+		performClickElement(allOrderTab);
+		performClickElement(roDropdown);
+		sendKeys(roDropdownValue,CampValue);
+		performClickElement(filterBtn);
+		if (clickElement())
+			return checkLandingpage(campaignHeaderText);
+
+		return false;
+	}
+
+	/**
+	 * Checks if data is populated in landing page for an order
+	 * 
+	 * @return - true if data is populated else false
+	 * @throws InterruptedException 
+	 */
+	public boolean verifyLandingPageDataPopulated() throws InterruptedException {
+		Thread.sleep(3000);
+		int count = waitUntilElementsPresenceLocated(contentIdentifier).size();
+		
+		Reporter.log("Data displayed in landing page  :" + Boolean.toString(count > 0));
+		return count > 0;
+	}
+
+	/**
+	 * Clicks sub link in order
+	 * 
+	 * @return - true if click is successful
+	 * @throws InterruptedException
+	 */
+	private boolean clickElement() throws InterruptedException {
+
+		int count = waitUntilElementsPresenceLocated(ordersIdentifier).size();
+		for (int i = 1; i <= count; i++) {
+
+			linksXpath = ordersIdentifier + "[" + i + "]/td[1]/a";
+			String link = ordersIdentifier + "[" + i + "]/td[4]/span";
+
+			if (!waitUntilElementsPresenceLocated(link).get(0).getText().trim().equals("-")) {
+
+				performClickElement(linksXpath+"[1]");
+
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Verifies landing page for when order link is clicked
+	 * 
+	 * @return - true if header matches the expected value
+	 * @throws InterruptedException
+	 */
+	public boolean verifyLandingpageOrder() throws InterruptedException {
+		performClickElement(ordersTab);
+		performClickElement(allOrderTab);
+		performClickElement(roDropdown);
+		sendKeys(roDropdownValue,CampOrderValue);
+		performClickElement(filterBtn);
+
+		//performClickElement(linksXpath + "[1]");
+		if (clickElement())
+		return checkLandingpage(orderHeaderText);
+		return false;
+
+	}
+
+	/**
+	 * Verifies landing page for when proposal link is clicked
+	 * 
+	 * @return - true if header matches the expected value
+	 * @throws InterruptedException
+	 */
+	public boolean verifyLandingpageProposal() throws InterruptedException {
+		performClickElement(ordersTab);
+		performClickElement(allOrderTab);
+		performClickElement(roDropdown);
+		sendKeys(roDropdownValue,CampPropValue);
+		performClickElement(filterBtn);
+		try {
+			waitUntilElementPresenceLocated(linksXpath + "[1]");
+		} catch (Exception e) {
+			Reporter.log("Proposal tab not present in displayed orders ");
+		fail("Proposal tab not present in displayed orders ");
+		}
+		performClickElement(linksXpath + "[1]");
+		return checkLandingpage(proposalHeaderText);
+	}
+
+/*
+ * Pallav:
+ * Declared month, Click DeliveryMonth,select month,click filter
+ * If current date is less than or equal to 12th then previous month is selected
+*/	public boolean verifyLandingPage() throws InterruptedException {
+		wait = elementUtility.getWebDriverWait(driver);
+		String month=dateHandler.getCurrentMonth("dd-MMM-yy");
+		String currdate = dateHandler.currentDate("dd-MMM-yy");
+		int date = Integer.parseInt(currdate.substring(0, 2));
+		
+		if(date<=28)
+			month = dateHandler.getPreviousMonth("dd-MMM-yy");
+		
+		performClickElement(ordersTab);
+		performClickElement(invoiceTab);
+		performClickElement(selectDeliveryMonth);
+		sendKeys(deliveryMonthInputBox, month);
+		performClickElement(filterInv);
+		return checkLandingpage(invoiceText);
+
+	}
+
+	public boolean checkInvoiceCount() {
+		return checkInvoiceCount(invoiceText);
+	}
+
+	private boolean checkInvoiceCount(String expectedText) {
+		String identifier = "xpath~//h1[contains(text(),'" + expectedText + "')]";
+		
+		if(driver.findElements(elementUtility.findElement(identifier)).size() > 0)
+		{
+			Reporter.log("Landing page header  :" + waitUntilElementsPresenceLocated(identifier).get(0).getText());
+		}
+		else 
+		{
+			identifier = "xpath~//h3[contains(text(),'" + expectedText + "')]";
+			if(driver.findElements(elementUtility.findElement(identifier)).size() > 0)
+				Reporter.log("Landing page header  :" + waitUntilElementsPresenceLocated(identifier).get(0).getText());
+			else
+			{
+				identifier = "xpath~//*[contains(text(),'" + expectedText + "')]";
+				if(driver.findElements(elementUtility.findElement(identifier)).size() > 0)
+				{
+					Reporter.log("Landing page header  :" + waitUntilElementsPresenceLocated(identifier).get(0).getText());
+				}
+			}
+		}
+		
+		String str = waitUntilElementsPresenceLocated(identifier).get(0).getText();
+
+		return Long.parseLong(str.substring(str.indexOf(":") + 1, str.indexOf("(")).trim()) != 0;
+	}
+
+	public boolean checkDataPopulationInvoice() throws InterruptedException {
+		String invoiceCountBeforeFilter = countInvoices();
+		performClickElement(resetBtn);
+		performClickElement(salesUserBox);
+		sendKeys(salesInputIdentifier, salesUser);
+		performClickElement(filterInv);
+		
+		String invoiceCountAfterFilter = countInvoices();
+		
+		if(invoiceCountBeforeFilter.equals(invoiceCountAfterFilter))
+			return false;
+		else
+		return true;
+	}
+
+	private String countInvoices() {
+		String invCountText = getAttribute(invCountAmt, "text").substring(15);
+		int indexVal = invCountText.indexOf("(");
+		String invoiceNum = invCountText.substring(0, indexVal);
+		
+		return invoiceNum;
+
+	}
+
+	public boolean verifyPdfDownload() throws InterruptedException {
+		wait = new WebDriverWait(driver, 30);
+		scrollToTop();
+		performClickElement(resetBtn);
+		performClickElement(filterInv);
+		
+		int countBeforeClick = fileHandler.countNoOfFile();
+
+		List<WebElement> elements = waitUntilElementsPresenceLocated(invoiceLink);
+		Thread.sleep(2000);
+		scrollToElement(elements.get(0), "down");
+		Thread.sleep(1000);
+		elements.get(0).click();
+		Thread.sleep(7000);
+		int countAfterClick = fileHandler.countNoOfFile();
+
+		return countBeforeClick < countAfterClick;
+
+	}
+	public boolean verifyLPPage(String type) throws InterruptedException {
+		wait = elementUtility.getWebDriverWait(driver);
+		
+		if(type=="Marketing")
+		{
+			if(!isWebElementPresent(marketingLead))
+				performClickElement(ordersTab);
+			
+			mouseScroll(marketingLead);
+			performClickElement(marketingLead);
+			return checkLandingpage(marketingLeadHead);
+		}
+		if(type=="Order")
+		{
+			if(!isWebElementPresent(orderDetail, 1))
+				performClickElement(ordersTab);
+			performClickElement(orderDetail);
+			return checkLandingpage(orderDetailHead);
+		}
+		if(type=="Payment")
+		{
+			if(!isWebElementPresent(paymentDetail, 1))
+				performClickElement(ordersTab);
+			performClickElement(paymentDetail);
+			return checkLandingpage(paymentDetailHead);
+		}
+		return false;
+	}
+}
+	

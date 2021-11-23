@@ -1,0 +1,785 @@
+package com.til.colombia.expresso.pageobjects.prod;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import com.til.colombia.expresso.pageobjects.CommonPageObjects;
+import com.til.colombia.expresso.utility.ReadPropertyFile;
+
+public class BookingCalendar extends CommonPageObjects {
+	
+	String DirectOrAgency = ReadPropertyFile.readFromPropertyFile("directAgency");
+	String proposalType = ReadPropertyFile.readFromPropertyFile("propType");
+	String packageType = ReadPropertyFile.readFromPropertyFile("packType");
+	String createProposal = ReadPropertyFile.getElementFromPropertyFile("create_proposal");
+	String softBookingOption = ReadPropertyFile.getElementFromPropertyFile("soft_booking_option");
+	String hardBookingOption = ReadPropertyFile.getElementFromPropertyFile("hard_booking_option");
+	String bookingDate = ReadPropertyFile.getElementFromPropertyFile("booking_date");
+	String nextMonth = ReadPropertyFile.getElementFromPropertyFile("next_month_arrow");
+	String prevMonth = ReadPropertyFile.getElementFromPropertyFile("prev_month_arrow");
+	String bookingMonth = ReadPropertyFile.getElementFromPropertyFile("booking_month");
+	String daysCount = ReadPropertyFile.getElementFromPropertyFile("days_count");
+	String daysSelected = ReadPropertyFile.getElementFromPropertyFile("selected_days");
+	String btnConfirmSelection = ReadPropertyFile.getElementFromPropertyFile("confirm_selection");
+	String btnCloseCalendar = ReadPropertyFile.getElementFromPropertyFile("close_calendar");
+	String selectedSFDate = ReadPropertyFile.getElementFromPropertyFile("soft_date_selected");
+	String hbAttachmentLink = ReadPropertyFile.getElementFromPropertyFile("hb_attachment");
+	String localPath = ReadPropertyFile.readFromPropertyFile("local_path");
+	String hbGoBtn = ReadPropertyFile.getElementFromPropertyFile("hb_go_btn");
+	String approvalStatus = ReadPropertyFile.getElementFromPropertyFile("approval_detail");
+	String bookingStatus = ReadPropertyFile.getElementFromPropertyFile("booking_status");
+	String editPackageBtn = ReadPropertyFile.getElementFromPropertyFile("edit_package_btn");
+	String bookingOptionLink = ReadPropertyFile.getElementFromPropertyFile("booking_option_link");
+	String myBookingLink = ReadPropertyFile.getElementFromPropertyFile("my_booking_link");
+	String expressoID = ReadPropertyFile.getElementFromPropertyFile("expresso_id");
+	String textBoxExpressoID = ReadPropertyFile.getElementFromPropertyFile("textbox_expresso_id");
+	String myBookingFilterBtn = ReadPropertyFile.getElementFromPropertyFile("my_booking_filter_btn");
+	String roBookingStatus = ReadPropertyFile.getElementFromPropertyFile("ro_booking_status");
+	String showDetailLink = ReadPropertyFile.getElementFromPropertyFile("show_detail_link");
+	String checkbox = ReadPropertyFile.getElementFromPropertyFile("date_checkbox");
+	String sendForHBBtn = ReadPropertyFile.getElementFromPropertyFile("btn_sendfor_hardbooking");
+	String mybookingUploadBtn = ReadPropertyFile.getElementFromPropertyFile("mybooking_uploadfile");
+	String mybookingSaveBtn = ReadPropertyFile.getElementFromPropertyFile("mybooking_save_btn");
+	String availabilityCalendarLink = ReadPropertyFile.getElementFromPropertyFile("availability_calendar_link");
+	String savedFilterBtn = ReadPropertyFile.getElementFromPropertyFile("saved_filter_btn");
+	String availabilityCalendarSearch = ReadPropertyFile.getElementFromPropertyFile("availability_calendar_search");
+	String countryBox = ReadPropertyFile.getElementFromPropertyFile("country_box");
+	String countryDDOption = ReadPropertyFile.getElementFromPropertyFile("country_dd_option");
+	String packageTextField = ReadPropertyFile.getElementFromPropertyFile("package_text_field");
+	String packageInputField = ReadPropertyFile.getElementFromPropertyFile("package_input_field");
+	String packageName = ReadPropertyFile.getElementFromPropertyFile("pacakge_name");
+	String packageDDOption = ReadPropertyFile.getElementFromPropertyFile("package_dd_option");
+	String packageID = ReadPropertyFile.getElementFromPropertyFile("pkg_id");
+	String packageWindowClose = ReadPropertyFile.getElementFromPropertyFile("pkg_pop_close");
+	String availabilityFilterBtn = ReadPropertyFile.getElementFromPropertyFile("availability_filter_btn");
+	String sbDate = ReadPropertyFile.getElementFromPropertyFile("sb_date");
+	String availabilityCalendarBtn = ReadPropertyFile.getElementFromPropertyFile("availability_calendar_option");
+	String availabilityMonthView = ReadPropertyFile.getElementFromPropertyFile("month_view");
+	String availabilityMonthName = ReadPropertyFile.getElementFromPropertyFile("month_name");
+	String availabilityNextMonth = ReadPropertyFile.getElementFromPropertyFile("next_month");
+	String calendarDate = ReadPropertyFile.getElementFromPropertyFile("calendar_date");
+	String calendarPackageLink = ReadPropertyFile.getElementFromPropertyFile("calendar_package_link");
+	String calendarPackageStatus = ReadPropertyFile.getElementFromPropertyFile("calendar_package_status");
+	String removeBookingBtn = ReadPropertyFile.getElementFromPropertyFile("remove_booking_btn");
+	String dateBookingStatus = ReadPropertyFile.getElementFromPropertyFile("date_booking_status");
+	String availabilityAddFilterBtn = ReadPropertyFile.getElementFromPropertyFile("availability_add_filter_btn");
+	String availabilityAddFilterName = ReadPropertyFile.getElementFromPropertyFile("availability_add_filter_name_field");
+	String availabilitySaveBtn = ReadPropertyFile.getElementFromPropertyFile("availability_save_btn");
+	String availabilitySavedFilterName = ReadPropertyFile.getElementFromPropertyFile("availability_saved_filters");
+	String availabilityDeleteSavedFilterBtn = ReadPropertyFile.getElementFromPropertyFile("availability_delete_saved_filter_btn");
+	String resetSelectedDates = ReadPropertyFile.getElementFromPropertyFile("reset_selected_dates");
+	String preSelectedDate = ReadPropertyFile.getElementFromPropertyFile("selected_date");
+	String packageBackBtn = ReadPropertyFile.getElementFromPropertyFile("package_back_btn");
+	String stageField = ReadPropertyFile.getElementFromPropertyFile("stage_field");
+	String stageDDOption = ReadPropertyFile.getElementFromPropertyFile("stage_dd_option");
+	String recallBtn = ReadPropertyFile.getElementFromPropertyFile("recall_btn");
+	String editOrdersBtn = ReadPropertyFile.getElementFromPropertyFile("proposal_edit_order_btn");
+	String valueAddCheckBox = ReadPropertyFile.getElementFromPropertyFile("valueAddCheck");
+	String roRefName = ReadPropertyFile.getElementFromPropertyFile("ro_ref_name");
+	String viewDetailBtn = ReadPropertyFile.getElementFromPropertyFile("view_detail_btn");
+	String viewBookingDetail = ReadPropertyFile.getElementFromPropertyFile("view_booking_detail"); /* change DATE= '19 Jan' and ExpressoID=SBExpressoID */
+	String SBExpressoID, HBRExpressoID, packID,SoftBookingDate,dateSelected;
+	Map<String,String> expressoIDURLMap = new HashMap<String,String>();
+	
+	public boolean checkBookingCalendarAvailabilityForCPDPackage()
+	{
+		boolean flag = false;
+		
+		signOut();
+		signIn("ThirdParty_User");
+		
+		if(initiateProposal(DirectOrAgency,proposalType))
+			if(selectPackage("Cost Per Day"))
+				if(isWebElementPresent(bookingTypeDD))
+					if(performClickElement(packageBackBtn))
+						if(selectPackage("CPM"))
+							if(!isWebElementPresent(bookingTypeDD))
+								if(performClickElement(packageBackBtn))
+									if(selectPackage("Cost Per Unit"))
+										if(!isWebElementPresent(bookingTypeDD))
+											if(performClickElement(packageBackBtn))
+												if(selectPackage("CPC"))
+													if(!isWebElementPresent(bookingTypeDD))
+														flag = true;
+		
+		return flag;
+	}
+	
+	public boolean selectBookingDate(String SoftOrHardBooking,String...specificBookigDate)
+	{
+		boolean flag = false, newSBFlag = false, dateFlag = false;
+		
+		if(SoftOrHardBooking.contains("New"))
+		{
+			SoftOrHardBooking = softBookingOption;
+			newSBFlag = true;
+		}
+		
+		performClickElement(bookingTypeDD);
+		performClickElement(SoftOrHardBooking);
+		if(SoftOrHardBooking.contains("Hard"))
+		{
+			tabToNext();
+			enterAtCurrentLocation();
+			if(uploadFile(attachmentLocation))
+				performClickElement(hbGoBtn);
+		}
+		
+		if(specificBookigDate.length>0)
+			dateFlag = selectDate(specificBookigDate[0].substring(1, 11));
+		else 
+			dateFlag = selectDate();
+		
+		if(dateFlag)
+		{
+			if(newSBFlag)
+				performClickElement(preSelectedDate);
+			
+			performClickElement(btnConfirmSelection);
+			if(isWebElementPresent(event))
+				if(isWebElementPresent(selectedSFDate))
+					flag = true;
+		}
+		else
+			performClickElement(btnCloseCalendar);
+		
+		return flag;
+	}
+	
+	public boolean selectDate(String...specificDate)
+	{
+		boolean flag = false;
+		String availableDate;
+		String selectedDays = getAttribute(daysSelected, "text");
+		
+		if(specificDate.length>0)
+		{
+			availableDate = specificDate[0].toString();	//2021-02-23
+			
+			String specificDateToString = new SimpleDateFormat("EEE-MMM-dd-yyyy").format(Date.valueOf(specificDate[0].toString()));
+			availableDate = bookingDate.replace("enterDate", specificDateToString);
+		}
+		else
+			availableDate = getAvailableDate();		// xpath~//*[@id="Sun-Feb-28-2021"]/a
+		
+		performClickElement(availableDate);
+		performClickElement(availableDate);
+		
+		dateSelected=availableDate;
+		System.out.println("Date Selected - "+dateSelected);
+		
+		if(!selectedDays.equals(getAttribute(daysSelected, "text")))
+			flag = true;
+		
+		return flag;			
+	}
+	
+	public String getAvailableDate()
+	{
+		boolean dateAvailableFlag = false;
+		LocalDate expectedDate = LocalDate.now();
+		String formattedDate;
+		int i=Integer.valueOf(getAttribute(daysCount, "text"));
+		
+		do
+		{
+			String expectedDateString = new SimpleDateFormat("EEE-MMM-dd-yyyy").format(java.sql.Date.valueOf(expectedDate));
+			formattedDate = bookingDate.replace("enterDate", expectedDateString);
+			
+			if((getAttribute(formattedDate, "class").contains("softBooking") || getAttribute(formattedDate, "class").equals("day")) && !getAttribute(formattedDate, "class").contains("day selected"))
+				dateAvailableFlag = true;
+			else if(getAttribute(formattedDate, "class").contains("wrong-month"))
+			{
+//				String month = getAttribute(bookingMonth, "text");
+				performClickElement(nextMonth);
+				if(getAttribute(formattedDate, "class").contains("softBooking") || getAttribute(formattedDate, "class").equals("day"))
+					dateAvailableFlag = true;
+			}
+			else if(getAttribute(formattedDate, "class").contains("disabled"))
+				break;
+			
+			if(dateAvailableFlag)
+				break;
+			else
+				expectedDate = dateHandler.getNextDate(expectedDate);
+			
+			--i;
+		}while(i>0);
+		
+		return formattedDate;
+	}
+	
+	public boolean checkBookingOnConfirmSelection(String bookingType,String ...specificDateAndPackage)
+	{
+		boolean flag = false;
+		String book, expectedBookingStatus, pkgName="";
+		
+		if(specificDateAndPackage.length > 0)
+		{
+			pkgName = "Package ID #"+specificDateAndPackage[1].toString();
+		}
+		
+		if(bookingType.contains("skip"))
+		{
+			book = "";
+			expectedBookingStatus = "";
+		}
+		else if(bookingType.contains("Soft"))
+		{
+			book = softBookingOption;
+			expectedBookingStatus = "SB";
+		}
+		else
+		{
+			book = hardBookingOption;
+			expectedBookingStatus = "HBR";
+		}
+		
+		if(initiateProposal(DirectOrAgency,proposalType))
+			if(selectPackage(packageType,pkgName))
+				if(fillPackageDetails())
+					if(isWebElementPresent(bookingTypeDD))
+					{
+						if(!book.equals(""))
+						{
+							if(specificDateAndPackage.length > 0)
+								selectBookingDate(book,specificDateAndPackage[0].toString());
+							else
+								selectBookingDate(book);
+						}
+								
+						if(performClickElement(saveBtn))
+							if(submitProposal())
+							{
+								System.out.println("--- Proposal = "+driver.getCurrentUrl());
+								
+								if(expectedBookingStatus.equals(""))
+								{	if(isWebElementPresent(expressoID))
+										flag =true;
+								}
+								else
+								{
+									if(getAttribute(bookingStatus,"text").contains(expectedBookingStatus))
+									{
+										flag = true;
+										expressoIDURLMap.put(getAttribute(expressoID, "text"), driver.getCurrentUrl());
+										
+										if(expectedBookingStatus.equals("SB"))
+										{
+											SBExpressoID = getAttribute(expressoID, "text");
+											SoftBookingDate = getAttribute(sbDate, "data-sb-list"); /* captures in format - 2021-01-19 */
+										}
+										else
+										{
+											HBRExpressoID = getAttribute(expressoID, "text");
+											SoftBookingDate = getAttribute(sbDate, "data-hbr-list"); /* captures in format - 2021-01-19 */
+										}
+										
+										packName = getAttribute(packageName, "text");
+										
+										if(performClickElement(packageName))
+										{
+											packID = getAttribute(packageID, "text");
+											performClickElement(packageWindowClose);
+										}
+									}
+								}
+								
+							}
+					}
+						
+		return flag;
+	}
+	
+	public boolean checkSoftBookingOnEditPackage()
+	{
+		boolean flag = false;
+		String book = softBookingOption, expectedBookingStatus = "SB";
+		
+		if(initiateProposal(DirectOrAgency,proposalType))
+			if(selectPackage(packageType))
+				if(fillPackageDetails())
+					if(performClickElement(saveBtn))
+						if(performClickElement(editPackageBtn))
+							if(selectBookingDate(book))
+								if(performClickElement(saveBtn))
+									if(submitProposal())
+									{
+										System.out.println("--- Proposal = "+driver.getCurrentUrl());
+										
+										if(getAttribute(bookingStatus,"text").contains(expectedBookingStatus))
+										{
+											flag = true;
+											expressoIDURLMap.put(getAttribute(expressoID, "text"), driver.getCurrentUrl());
+										}
+									}
+							
+		
+		return flag;
+	}
+	
+	public boolean checkNewSoftBookingOnEditPackage()
+	{
+		boolean flag = false;
+		String book = softBookingOption, expectedBookingStatus = "SB";
+		
+		if(initiateProposal(DirectOrAgency,proposalType))
+			if(selectPackage(packageType))
+				if(fillPackageDetails())
+					if(isWebElementPresent(bookingTypeDD))
+						if(selectBookingDate(book))
+							if(performClickElement(saveBtn))
+								if(performClickElement(editPackageBtn))
+									if(selectBookingDate("New SB"))
+										if(performClickElement(saveBtn))
+											if(submitProposal())
+											{
+												System.out.println("--- Proposal = "+driver.getCurrentUrl());
+												
+												if(getAttribute(bookingStatus,"text").contains(expectedBookingStatus))
+												{
+													flag = true;
+													expressoIDURLMap.put(getAttribute(expressoID, "text"), driver.getCurrentUrl());
+													
+													packName = getAttribute(packageName, "text");
+													SoftBookingDate = getAttribute(sbDate, "data-sb-list");
+													if(performClickElement(packageName))
+													{
+														packID = getAttribute(packageID, "text");
+														performClickElement(packageWindowClose);
+													}
+												}
+											}	
+							
+		
+		return flag;
+	}
+	
+	public boolean checkVisibilityInMyBookings(String booking)
+	{
+		boolean flag = false;
+		String expID, expectedBookingStatus;
+		
+		if(booking.equalsIgnoreCase("SB"))
+		{
+			expID = SBExpressoID;
+			expectedBookingStatus = "SB" ;
+		}
+		else
+		{
+			expID = HBRExpressoID;
+			expectedBookingStatus = "HBR";
+		}
+		
+		System.out.println("--- Checking MyBooking - "+expID+" - status = "+expectedBookingStatus);
+		
+		if(openLink(myBookingLink,bookingOptionLink))
+		{
+			sendKeys(textBoxExpressoID, expID);
+			performClickElement(myBookingFilterBtn);
+			if(getAttribute(roBookingStatus, "text").equals(expectedBookingStatus))
+				flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean checkSBToHBRMyBookings()
+	{
+		boolean flag = false;
+		
+		System.out.println("--- Converting SB to HBR - "+SBExpressoID);
+		
+		if(openLink(myBookingLink,bookingOptionLink))
+		{
+			sendKeys(textBoxExpressoID, SBExpressoID);
+			performClickElement(myBookingFilterBtn);
+			performClickElement(showDetailLink);
+			performClickElement(checkbox);
+			performClickElement(sendForHBBtn);
+			driver.switchTo().activeElement();
+			performClickElement(mybookingUploadBtn);
+			tabToNext();
+			tabToNext();
+			pressEnter();
+			driver.switchTo().activeElement();
+			if(uploadFile(attachmentLocation))
+			{
+				performClickElement(mybookingSaveBtn);
+				sendKeys(textBoxExpressoID, SBExpressoID);
+				performClickElement(myBookingFilterBtn);
+			}
+			
+			if(getAttribute(roBookingStatus, "text").equals("HBR"))
+				flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean checkAvailabilityCalendarForSB()
+	{
+		boolean flag = false, ddFlag=false;
+		int i=1;
+		
+		pageRefresh();
+
+		SoftBookingDate = SoftBookingDate.substring(1, SoftBookingDate.length()-1);
+		SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter2 = new SimpleDateFormat("dd-MMM-yyyy");
+		String SBDate="01-Jan-2020", SBMonth="Jan",SBYear="2020";
+
+			try {
+				SBDate = formatter2.format(formatter1.parse(SoftBookingDate));
+				SBMonth = SBDate.substring(3, 6);
+				SBYear = SBDate.substring(7, SBDate.length());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		
+			if(openLink(availabilityCalendarLink,bookingOptionLink))
+				if(performClickElement(availabilityCalendarSearch))
+				{
+					if(performClickElement(countryBox))
+						sendKeys(countryDDOption, "Global");
+					if(performClickElement(countryBox))
+						sendKeys(countryDDOption, "India");
+					
+					if(performClickElement(packageTextField))
+					{
+						waitUntilElementPresenceLocated(packageInputField).sendKeys(packName);
+						sleep(1000);
+						
+						while(!ddFlag)
+						{
+							String option = packageDDOption.replace(packageDDOption.subSequence(packageDDOption.lastIndexOf("[")+1, packageDDOption.lastIndexOf("]")), String.valueOf(i));
+							
+							if(isWebElementPresent(option))
+							{
+								if(getAttribute(option, "text").contains("("+packID+")"))
+								{
+									if(performClickElement(option))
+										if(performClickElement(availabilityFilterBtn))
+										{
+											driver.switchTo().frame("calendar-frame");
+											if(performClickElement(availabilityCalendarBtn))
+												if(performClickElement(availabilityMonthView))
+												{
+													if(!getAttribute(availabilityMonthName, "text").contains(SBYear))
+													{ int j=0;
+														do
+														{
+															performClickElement(availabilityNextMonth);
+															++j;
+														}while(getAttribute(availabilityMonthName, "text").contains(SBYear) || j<13);
+													}
+													
+													if(!getAttribute(availabilityMonthName, "text").contains(SBMonth))
+													{
+														int j=0;
+														do
+														{
+															performClickElement(availabilityNextMonth);
+															++j;
+														}while(getAttribute(availabilityMonthName, "text").contains(SBYear) || j<13);
+													}
+													
+													if(checkCalendar(packID+","+"'"+SoftBookingDate+"'"))
+														ddFlag = true;
+												}
+										}
+								}
+							}
+							else if (i>15)
+								ddFlag = true;
+							else
+								ddFlag = true;
+							
+							++i;
+						}
+						flag = true;
+					}
+				}
+				
+		
+		return flag;
+	}
+	
+	public boolean checkCalendar(String DateString)
+	{
+		boolean flag=false;
+		
+		calendarPackageLink = calendarPackageLink.replace("packIdDate", DateString);
+		
+		if(!isWebElementPresent(calendarPackageLink,1))
+				flag = true;
+		
+		return flag;
+	}
+	
+	public boolean checkGeoPackageFilterSaving()
+	{
+		boolean flag = false;
+		pageRefresh();
+		
+			if(openLink(availabilityCalendarLink,bookingOptionLink))
+			{
+				deleteExistingTestAutomationFilters();
+				
+				if(performClickElement(availabilityCalendarSearch))
+				{
+					if(performClickElement(countryBox))
+						sendKeys(countryDDOption, "Global");
+					
+					if(performClickElement(packageTextField))
+					{
+						sendKeys(packageInputField, "interstitial");
+						wait = elementUtility.getWebDriverWait(driver);
+						wait.until(ExpectedConditions.presenceOfElementLocated(elementUtility.findElement(availabilityAddFilterBtn))).click();
+						sendKeys(availabilityAddFilterName, "test type");
+						wait.until(ExpectedConditions.presenceOfElementLocated(elementUtility.findElement(availabilitySaveBtn))).click();
+				
+						//performClickElement(availabilitySaveBtn);
+						/*if(performClickElement(availabilityAddFilterBtn))
+						{
+							sendKeys(availabilityAddFilterName, "Test Automation");
+							performClickElement(availabilitySaveBtn);
+						}*/
+					}
+					
+					if(checkSavedFilter())
+					{
+						flag = true;
+						deleteExistingTestAutomationFilters();
+					}
+					
+				}
+			}
+		
+		return flag;
+	}
+	
+	public void deleteExistingTestAutomationFilters()
+	{
+		int i=1;
+		
+		if(performClickElement(savedFilterBtn))
+		{
+			String savedFilterName = availabilitySavedFilterName.replace("num",String.valueOf(i));
+			String deleteBtn = availabilityDeleteSavedFilterBtn.replace("num",String.valueOf(i));
+			
+			while(isWebElementPresent(savedFilterName))
+			{
+				if(getAttribute(savedFilterName, "text").equals("Test Automation"))
+					performClickElement(deleteBtn);
+				
+				savedFilterName = availabilitySavedFilterName.replace("num",String.valueOf(++i));
+				deleteBtn = availabilityDeleteSavedFilterBtn.replace("num",String.valueOf(++i));
+			}
+		}
+	}
+	
+	public boolean checkSavedFilter()
+	{
+		boolean flag = false;
+		int i=1;
+		
+		if(performClickElement(savedFilterBtn))
+		{
+			String savedFilterName = availabilitySavedFilterName.replace("num",String.valueOf(i));
+			
+			while(isWebElementPresent(savedFilterName))
+			{
+				if(getAttribute(savedFilterName, "text").equals("Test Automation"))
+				{
+					flag = true;
+					break;
+				}
+			}
+		}
+		
+		return flag;
+	}
+	
+	public boolean checkRemovalOfTestBooking()
+	{
+		boolean flag = false, checkFlag = true;
+		String beforeStatus;
+		
+		System.out.println("Total Bookings - "+expressoIDURLMap);
+		
+		
+			if(openLink(myBookingLink, bookingOptionLink))
+			{
+				for(Map.Entry<String,String> me: expressoIDURLMap.entrySet())
+				{
+					sendKeys(textBoxExpressoID, me.getKey());
+					performClickElement(myBookingFilterBtn);
+					performClickElement(showDetailLink);
+					performClickElement(checkbox);
+					beforeStatus = getAttribute(dateBookingStatus, "text");
+					performClickElement(removeBookingBtn);
+					
+					if(beforeStatus.equals(getAttribute(dateBookingStatus, "text")))
+						checkFlag = false;
+				}
+				
+				if(checkFlag)
+				{
+					flag = true;
+					
+					changeStage();
+				}
+			}
+		
+		return flag;
+	}
+	
+	public boolean openLink(String linkToOpen, String parentLink)
+	{
+		boolean flag;
+		
+		if(!isWebElementPresent(linkToOpen, 1))
+			performClickElement(parentLink);
+		
+		performClickElement(linkToOpen);
+		
+		flag = true;
+		
+		return flag;
+	}
+	
+	public void changeStage()
+	{
+		for (Map.Entry<String, String> me : expressoIDURLMap.entrySet()) 
+		{ 
+            driver.get(me.getValue());
+		
+			if(editableOrder())
+				if(performClickElement(stageField))
+				{
+					if(checkDDOptions(stageDDOption,"Business Dropped"))
+						submitProposal();
+				}
+		}
+	}
+	
+	public boolean editableOrder()
+	{
+		boolean flag = false,  recallFlag = false, editFlag = false;
+
+		if(!isWebElementPresent(saveProposalOrder, 1) || !isWebElementPresent(addPackageBtn, 1))
+		{
+			if(isWebElementPresent(recallBtn, 1))
+			{
+				if(performClickElement(recallBtn))
+					recallFlag = true;
+				sleep(1000);
+			}
+			if(isWebElementPresent(editOrdersBtn, 1))
+				if(performClickElement(editOrdersBtn))
+					editFlag = true;
+		}
+		else
+			flag = true;
+		
+		if(recallFlag)
+		{
+			if(editFlag)
+				flag = true;
+		}
+		else
+		{
+			if(editFlag)
+				flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean checkDDOptions(String field, String expectedValue)
+	{
+		boolean flag = false, limitReached=false;
+
+		int i=4;
+		
+		do
+		{
+			String option = field.replace("2]", String.valueOf(i)+"]");
+			if(isWebElementPresent(option, 1))
+			{
+				if(getAttribute(option, "text").contains(expectedValue))
+				{
+					performClickElement(option);
+					flag = true;
+				}
+			}
+			else
+				limitReached = true;
+			
+			i++;
+		}while(!flag && !limitReached);
+		
+		if(!flag)
+			System.out.println("---> Expected Value Not Found = "+expectedValue);
+		
+		return flag;
+	}
+	
+	public boolean doBookingOnSpecificDate(String bookingType,String bookOnDate)
+	{
+
+		boolean flag = false;
+		String book, expectedBookingStatus;
+		
+		if(bookingType.contains("Soft"))
+		{
+			book = softBookingOption;
+			expectedBookingStatus = "SB";
+		}
+		else
+		{
+			book = hardBookingOption;
+			expectedBookingStatus = "HBR";
+		}
+		
+		if(initiateProposal(DirectOrAgency,proposalType))
+			if(selectPackage(packageType))
+				if(fillPackageDetails())
+					if(isWebElementPresent(bookingTypeDD))
+						if(selectBookingDate(book))
+							if(performClickElement(saveBtn))
+								if(submitProposal())
+								{
+									System.out.println("--- Proposal = "+driver.getCurrentUrl());
+									
+									if(getAttribute(bookingStatus,"text").contains(expectedBookingStatus))
+									{
+										flag = true;
+										expressoIDURLMap.put(getAttribute(expressoID, "text"), driver.getCurrentUrl());
+										
+										if(expectedBookingStatus.equals("SB"))
+											SBExpressoID = getAttribute(expressoID, "text");
+										else
+											HBRExpressoID = getAttribute(expressoID, "text");
+										
+										packName = getAttribute(packageName, "text");
+										SoftBookingDate = getAttribute(sbDate, "data-sb-list"); /* captures in format - 2021-01-19 */
+										if(performClickElement(packageName))
+										{
+											packID = getAttribute(packageID, "text");
+											performClickElement(packageWindowClose);
+										}
+									}
+								}
+		
+		return flag;
+	
+	}
+}
