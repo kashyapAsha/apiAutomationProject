@@ -1,0 +1,1685 @@
+package com.til.colombia.expresso.pageobjects.qa;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import org.openqa.selenium.WebElement;
+import com.til.colombia.expresso.pageobjects.CommonPageObjects;
+import com.til.colombia.expresso.pageobjects.prod.LoginPage;
+import com.til.colombia.expresso.utility.ReadPropertyFile;
+
+public class ParallelApprovalPageObject extends CommonPageObjects{
+	
+	String ordersTab = ReadPropertyFile.getElementFromPropertyFile("orders_tab");
+	String editOrdersBtn = ReadPropertyFile.getElementFromPropertyFile("edit_order_btn");
+	String createProposal = ReadPropertyFile.getElementFromPropertyFile("create_proposal");
+	String newProposalHeaderText = ReadPropertyFile.readFromPropertyFile("new_Proposal_Header_Text").trim();
+	String agencyRadio = ReadPropertyFile.getElementFromPropertyFile("agencyRadio_daf");
+	String proposalField = ReadPropertyFile.getElementFromPropertyFile("proposalType_daf");
+	String proposalTypeInput = ReadPropertyFile.getElementFromPropertyFile("proposalTypeInput_daf");
+	String invoicingFrom = ReadPropertyFile.getElementFromPropertyFile("invoicingFrom_daf");
+	String invoicingFromInput = ReadPropertyFile.getElementFromPropertyFile("invoicingFromInput_daf");
+	String sapBU = ReadPropertyFile.getElementFromPropertyFile("sapBU_daf");
+	String sapBUInput = ReadPropertyFile.getElementFromPropertyFile("sapBUInput_daf");
+	String advertiser = ReadPropertyFile.getElementFromPropertyFile("advertiser_daf");
+	String advertiserInput = ReadPropertyFile.getElementFromPropertyFile("advertiserInput_daf");
+	String closureDate = ReadPropertyFile.getElementFromPropertyFile("closureDate_daf");
+	String brand = ReadPropertyFile.getElementFromPropertyFile("brand_daf");
+	String addPackageBtn = ReadPropertyFile.getElementFromPropertyFile("addPackageBtn_daf");
+	String packagePricing = ReadPropertyFile.getElementFromPropertyFile("packagePricing_daf");
+	String packagePricingInput = ReadPropertyFile.getElementFromPropertyFile("packagePricingInput_daf");
+	String packageFilterBtn = ReadPropertyFile.getElementFromPropertyFile("packageFilterBtn_daf");
+	String selectOption = ReadPropertyFile.getElementFromPropertyFile("selectOption_daf");
+	String event = ReadPropertyFile.getElementFromPropertyFile("event_daf");
+	String eventInput= ReadPropertyFile.getElementFromPropertyFile("eventInput_daf");
+	String sold = ReadPropertyFile.getElementFromPropertyFile("sold_daf");
+	String geoGroup = ReadPropertyFile.getElementFromPropertyFile("geoGroup_daf");
+	String saveBtn = ReadPropertyFile.getElementFromPropertyFile("saveBtn_daf");
+	String impressionUnits = ReadPropertyFile.getElementFromPropertyFile("impressionUnits_daf");
+	String saveProposalOrder = ReadPropertyFile.getElementFromPropertyFile("saveProposalOrder_daf");
+	String createOrderBtn = ReadPropertyFile.getElementFromPropertyFile("createOrderBtn_daf");
+	String submitBtn= ReadPropertyFile.getElementFromPropertyFile("submitBtn_daf");
+	String roRef = ReadPropertyFile.getElementFromPropertyFile("roRef_daf");
+	String campaignName = ReadPropertyFile.getElementFromPropertyFile("campaignName_daf");
+	String roReceiveDate = ReadPropertyFile.getElementFromPropertyFile("roReceiveDate_daf");
+	String attachFileBtn = ReadPropertyFile.getElementFromPropertyFile("attachFileBtn_daf");
+	String saveROBtn = ReadPropertyFile.getElementFromPropertyFile("saveROBtn_daf");
+	String agencyField = ReadPropertyFile.getElementFromPropertyFile("agencyField_daf");
+	String agencyFieldInput = ReadPropertyFile.getElementFromPropertyFile("agencyFieldInput_daf");
+	String rateCard = ReadPropertyFile.getElementFromPropertyFile("rateCard_daf");
+	String profileIcon = ReadPropertyFile.getElementFromPropertyFile("profileIcon_daf");
+	String logoutLink = ReadPropertyFile.getElementFromPropertyFile("logoutLink_daf");
+	String approvalWindowComment = ReadPropertyFile.getElementFromPropertyFile("approvalWindowComment_daf");
+	String approvalWindowBtn = ReadPropertyFile.getElementFromPropertyFile("approvalWindowBtn_daf");
+	String rejectWindowBtn = ReadPropertyFile.getElementFromPropertyFile("rejectWindowBtn_daf");
+	String editProposalBtn = ReadPropertyFile.getElementFromPropertyFile("editProposalBtn_daf");
+	String submitApprovalBtn = ReadPropertyFile.getElementFromPropertyFile("submit_approval_btn");
+	String approvalStatus = ReadPropertyFile.getElementFromPropertyFile("approval_detail");
+	String userApprovalStatus = ReadPropertyFile.getElementFromPropertyFile("user_approval_status");
+	String userROStatus = ReadPropertyFile.getElementFromPropertyFile("user_ro_status");
+	String homeTab = ReadPropertyFile.getElementFromPropertyFile("home_tab");
+	String consentMsg = ReadPropertyFile.getElementFromPropertyFile("consent_message");
+	String acceptBtn = ReadPropertyFile.getElementFromPropertyFile("accept_btn");
+	String dialogOK = ReadPropertyFile.getElementFromPropertyFile("modalDialog_btn");
+	//String createValueAddBtn = ReadPropertyFile.getElementFromPropertyFile("create_value_add_btn");
+	String commercialField = ReadPropertyFile.getElementFromPropertyFile("commercial_dd");
+	String financeField = ReadPropertyFile.getElementFromPropertyFile("finance_dd");
+	String csField = ReadPropertyFile.getElementFromPropertyFile("cs_user_dd");
+	String csUserInput = ReadPropertyFile.getElementFromPropertyFile("cs_user_input");
+	String comFinCSDDInput = ReadPropertyFile.getElementFromPropertyFile("commercial_finance_cs_dd_input");
+	String alertMsg = ReadPropertyFile.getElementFromPropertyFile("alert_msg");
+	String recallBtn = ReadPropertyFile.getElementFromPropertyFile("recall_btn");
+	String advGstField = ReadPropertyFile.getElementFromPropertyFile("adv_gst_field");
+	String advGstDDOption = ReadPropertyFile.getElementFromPropertyFile("adv_gst_dd_option");
+	String billableAgencyField = ReadPropertyFile.getElementFromPropertyFile("billable_agency_field");
+	String billableAgencyInput = ReadPropertyFile.getElementFromPropertyFile("billable_agency_input");
+	String billableAgencyDDOption = ReadPropertyFile.getElementFromPropertyFile("billable_agency_dd_option");
+	String agencyGstField = ReadPropertyFile.getElementFromPropertyFile("agency_gst_field");
+	String agencyGstDDOption = ReadPropertyFile.getElementFromPropertyFile("agency_gst_dd_option");
+	String billableAgencyGstField = ReadPropertyFile.getElementFromPropertyFile("billable_agency_gst_field");
+	String billableAgencyGstDDOption = ReadPropertyFile.getElementFromPropertyFile("billable_agency_gst_dd_option");
+	String billableAgencyCheckbox = ReadPropertyFile.getElementFromPropertyFile("billable_agency_checkbox");
+	String roDetailTable = ReadPropertyFile.getElementFromPropertyFile("ro_detail_table");
+	String agencyDDOption = ReadPropertyFile.getElementFromPropertyFile("agency_dd_option");
+	String advertiserDDOption = ReadPropertyFile.getElementFromPropertyFile("advertiser_dd_option");
+	String stageField = ReadPropertyFile.getElementFromPropertyFile("stage_field");
+	String stageDDOption = ReadPropertyFile.getElementFromPropertyFile("stage_dd_option");
+	String customSolutionCheckbox = ReadPropertyFile.getElementFromPropertyFile("custom_solution_checkbox");
+	String dateCalendar = ReadPropertyFile.getElementFromPropertyFile("date_calendar");
+	String salesUserField = ReadPropertyFile.getElementFromPropertyFile("sales_user_lineitem_screen");
+	String salesUserDDOption = ReadPropertyFile.getElementFromPropertyFile("sales_user_options");
+	String salesUserInput = ReadPropertyFile.getElementFromPropertyFile("sales_user_input");
+	String packageDeleteBtn = ReadPropertyFile.getElementFromPropertyFile("package_delete_button");
+	String alertOK = ReadPropertyFile.getElementFromPropertyFile("delete_package_alert");
+	String successAlert = ReadPropertyFile.getElementFromPropertyFile("success_alert");
+	String defaultCSValue = ReadPropertyFile.readFromPropertyFile("defaultCsValue");
+	String defaultComValue = ReadPropertyFile.readFromPropertyFile("defaultCommercialValue");
+	String defaultFinValue = ReadPropertyFile.readFromPropertyFile("defaultFinanceValue");
+	String adminCSValue = ReadPropertyFile.readFromPropertyFile("adminCsValue");
+	String adminComValue = ReadPropertyFile.readFromPropertyFile("adminCommercialValue");
+	String adminFinValue = ReadPropertyFile.readFromPropertyFile("adminFinanceValue");
+	String roREF = ReadPropertyFile.readFromPropertyFile("ro_ref");
+	String roCampaignName = ReadPropertyFile.readFromPropertyFile("ro_campaign_name");
+	String attachmentPath = ReadPropertyFile.readFromPropertyFile("attachment_path");
+	String newroREF = ReadPropertyFile.readFromPropertyFile("new_ro_ref");
+	String newroCampaignName = ReadPropertyFile.readFromPropertyFile("new_ro_campaign_name");
+	String newAttachmentPath = ReadPropertyFile.readFromPropertyFile("new_attachment_path");
+	String jvcCheckbox = ReadPropertyFile.getElementFromPropertyFile("jvc_deal_checkbox");
+	String markObsoleteCheckbox = ReadPropertyFile.getElementFromPropertyFile("mark_obsolete_checkbox");
+	String orderMediaField = ReadPropertyFile.getElementFromPropertyFile("order_media_type_field");
+	String orderMediaDDOption = ReadPropertyFile.getElementFromPropertyFile("order_media_type_dd_option");
+	String markColombiaCheckbox = ReadPropertyFile.getElementFromPropertyFile("mark_colombia_checkbox");
+	String salesIndustryField = ReadPropertyFile.getElementFromPropertyFile("order_sales_industry_field");
+	String salesIndustryDDOption = ReadPropertyFile.getElementFromPropertyFile("order_sales_industry_dd_option");
+	String editPackageBtn = ReadPropertyFile.getElementFromPropertyFile("edit_package_btn");
+	String successOkBtn = ReadPropertyFile.getElementFromPropertyFile("adsales_alert_ok");
+	String industrySpocField = ReadPropertyFile.getElementFromPropertyFile("industrySpoc_field");
+	String industryDDOption = ReadPropertyFile.getElementFromPropertyFile("industrySpoc_dd_option");
+	String teamSpocBtn = ReadPropertyFile.getElementFromPropertyFile("team_spoc_btn");
+	String customSolutionSpocField = ReadPropertyFile.getElementFromPropertyFile("custom_solution_spoc_field");
+	String customSolutionDDOption = ReadPropertyFile.getElementFromPropertyFile("custom_solutin_spoc_dd_option");
+	String programmaticSpocField = ReadPropertyFile.getElementFromPropertyFile("programmatic_spoc_field");
+	String programmaticSpocDDOption = ReadPropertyFile.getElementFromPropertyFile("programmatic_spoc_dd_option");
+	String productSpocField = ReadPropertyFile.getElementFromPropertyFile("product_spoc_field");
+	String productDDOption = ReadPropertyFile.getElementFromPropertyFile("product_spoc_dd_option");
+	String clientSuccessSpocField = ReadPropertyFile.getElementFromPropertyFile("client_success_spoc_field");
+	String clientSuccessDDOption = ReadPropertyFile.getElementFromPropertyFile("client_success_spoc_dd_option");
+	String seName = ReadPropertyFile.readAppData("se_username"); 
+	String defaultAdv = ReadPropertyFile.readFromPropertyFile("default_adv");
+	String defaultAgency = ReadPropertyFile.readFromPropertyFile("default_agency");
+	String newAdv = ReadPropertyFile.readFromPropertyFile("new_adv");
+	String newAgency = ReadPropertyFile.readFromPropertyFile("new_agency");
+	String newBilAdv = ReadPropertyFile.readFromPropertyFile("new_bil_adv");
+	String newBilAgency = ReadPropertyFile.readFromPropertyFile("new_bil_agency");
+	String bcclSubGroupField = ReadPropertyFile.getElementFromPropertyFile("bccl_subgroup_field");
+	String bcclSubGroupDDOption = ReadPropertyFile.getElementFromPropertyFile("bccl_subgroup_dd_option");
+	String programmaticDealField = ReadPropertyFile.getElementFromPropertyFile("programmatic_deal_field");
+	String programmaticDealDDOption = ReadPropertyFile.getElementFromPropertyFile("programmatic_deal_dd_option");
+	String mediationCheckbox = ReadPropertyFile.getElementFromPropertyFile("mediation_checkbox");
+	String pitchedSSCheckbox = ReadPropertyFile.getElementFromPropertyFile("pitched_ss_checkbox");
+	String costTypeCheckbox = ReadPropertyFile.getElementFromPropertyFile("cost_type_checkbox");
+	String viewLineitemCheckbox = ReadPropertyFile.getElementFromPropertyFile("view_lineitem_checkbox");
+	String nonNativeBtn = ReadPropertyFile.getElementFromPropertyFile("non_native_btn");
+	String colombiaBtn = ReadPropertyFile.getElementFromPropertyFile("colombia_btn");
+	String taxableBtn = ReadPropertyFile.getElementFromPropertyFile("taxable_btn");
+	String dateRangeField = ReadPropertyFile.getElementFromPropertyFile("date_range");
+	String next7DaysLink = ReadPropertyFile.getElementFromPropertyFile("next_days");
+	String originalROField = ReadPropertyFile.getElementFromPropertyFile("original_ro_field");
+	String newCampaignRefName = ReadPropertyFile.readFromPropertyFile("new_Campaign_Ref_Name");
+	String agencyCommissionCheckbox = ReadPropertyFile.getElementFromPropertyFile("agency_commission_checkbox");
+	String saveOrder = ReadPropertyFile.getElementFromPropertyFile("save_order_btn");
+	String salesIndustryDD = ReadPropertyFile.getElementFromPropertyFile("sales_industry_dd");
+	String salesIndustryDDValue=ReadPropertyFile.readFromPropertyFile("sales_industry_dd_value");
+	String salesIndustrySrch = ReadPropertyFile.getElementFromPropertyFile("sales_industry_srch_field");
+	
+	
+	String directURL, agencyURL;
+	
+	public void printMethodName()
+	{
+		StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+		String calledMethod = stacktrace[2].getMethodName();
+		String methodName = stacktrace[3].getMethodName();
+		
+		System.out.println("*** "+methodName+" ---> "+calledMethod);
+		
+	}
+	
+	public void printName()
+	{
+		StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+		String currentMethod = stacktrace[2].getMethodName();
+		
+		
+		System.out.println("#-#-#-#-#-#-#-#-#-#-#-#-#-# "+currentMethod+" -#-#-#-#-#-#-#");
+		
+	}
+	
+	public boolean verifyProposalCreation(String proposalType, String packageType)
+	{ 
+		boolean flag = false, directFlag = false, agencyFlag = false;
+		
+		printName();
+		
+		if(loginWithUser("Proposal Creation", "ROLE_SALES_EXEC"))
+		{	
+			/*if(initiateProposal("Direct",proposalType, packageType))
+			{	
+				if(addPackage())
+					if(performClickElement(saveProposalOrder))
+						if(performClickElement(submitApprovalBtn))
+						{
+							directURL = driver.getCurrentUrl();
+							directFlag = true;
+							System.out.println("---> Proposal Direct URL = "+directURL);
+						}
+			}*/
+			
+			if(initiateProposal("Agency", proposalType))
+			{	
+				if(addPackage(packageType))
+					if(performClickElement(saveProposalOrder))
+						if(performClickElement(submitApprovalBtn))
+						{
+							agencyURL = driver.getCurrentUrl();
+							agencyFlag = true;
+							System.out.println("---> Proposal Agency URL = "+agencyURL);
+						}
+			}
+		}
+		
+		if(agencyFlag)
+			flag = true;
+		
+		return flag;
+	}
+
+	
+	public boolean loginWithUser(String directAgency, String userToLogin)
+	{
+		boolean flag = false;
+		String roURL,user;
+		
+		printMethodName();
+		
+		if(userToLogin.contains(" Changed"))
+			user = "Changed_User";
+		else
+			user = userToLogin;
+		
+		if(!System.getProperty("env").equals(user))
+		{
+			if(isWebElementPresent(ordersTab, 1))
+				signOut();
+			
+			signIn(user);
+			
+			if(directAgency.equals("Direct"))
+				roURL = directURL;
+			else if(directAgency.equals("Agency"))
+				roURL = agencyURL;
+			else
+				roURL = null;
+			
+			if(roURL!=null)
+				driver.get(roURL);
+		}
+		
+		flag = true;
+		
+		return flag;
+	}
+	
+	public void signOut()
+	{
+		if(!isWebElementPresent(profileIcon, 1))
+		{
+			performClickElement(ordersTab);
+			performClickElement(createProposal);
+		}
+		performClickElement(profileIcon);
+		driver.switchTo().activeElement();
+		performClickElement(logoutLink);
+		
+		System.out.println("*** SigningOut = "+System.getProperty("env"));
+	}
+	
+	public boolean signIn(String user)
+	{
+		boolean flag = false;
+		System.setProperty("env", user);
+		
+		try {
+			new LoginPage().login();
+			
+			if(checkForSuccessfulLogin())
+				flag = true;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(flag)
+			System.out.println("*** SigningAs = "+System.getProperty("env"));
+		
+		return flag;
+	}
+	
+	
+	public boolean checkForSuccessfulLogin()
+	{
+		boolean flag = false;
+		
+		if(isWebElementPresent(consentMsg,1))
+		{
+			performClickElement(consentMsg);
+			performClickElement(acceptBtn);
+		}
+		if(isWebElementPresent(homeTab, 1))
+			flag = true;
+		
+		return flag;
+	}
+	
+	public boolean initiateProposal(String direcAgenc, String proposalType)
+	{
+		boolean flag = false;
+		int counter = 0;
+		String propType="Client Domestic";
+		String currency="INR";
+		
+		if(proposalType.contains("International"))
+		{
+			propType = "Client International";
+			currency = proposalType.substring(proposalType.indexOf("_")+1, proposalType.length());
+		}
+		else
+			propType = proposalType;
+		
+		do
+		{
+			pageRefresh();
+			openProposalPage();
+			
+			if(direcAgenc.equalsIgnoreCase("Agency"))
+			{
+				performClickElement(agencyRadio);
+				performClickElement(agencyField);
+				if(!currency.equals("INR"))
+					sendKeys(agencyFieldInput, "Cricket Acquisition");
+				else
+					sendKeys(agencyFieldInput, defaultAgency);
+			}
+			performClickElement(proposalField);
+			sendKeys(proposalTypeInput, propType);
+			performClickElement(invoicingFrom);
+			sendKeys(invoicingFromInput,"TIL");
+			performClickElement(advertiser);
+			sleep(2000);
+			
+			if(propType.equals("In House"))
+				sendKeys(advertiserInput, "Test Fida");
+			else if(direcAgenc.equalsIgnoreCase("Direct") && currency.equalsIgnoreCase("USD"))
+				sendKeys(advertiserInput,"Agency USD");
+			else
+				sendKeys(advertiserInput, defaultAdv);
+			
+			performClickElement(closureDate);
+		sleep(2000);
+			pressEnter();
+			sendKeys(brand,"TestBrand "+propType);
+			
+			performClickElement(addPackageBtn);
+			
+			if(driver.getCurrentUrl().contains("expresso/addPackageLineitem.htm"))
+				flag = true;
+			
+			counter++;
+		}while(counter<2 && !flag);
+		
+		return flag;
+	}
+	
+	public void openProposalPage()
+	{
+		if(!isWebElementPresent(createProposal, 1))
+			performClickElement(ordersTab);
+		performClickElement(createProposal);
+	}
+	
+	public void checkGSTField(String gstField, String ddOption)
+	{
+		printMethodName();
+		
+		if(getAttribute(gstField, "text").equals("Select an option"))
+		{
+			performClickElement(gstField);
+			performClickElement(ddOption);
+		}
+	}
+	
+	public boolean addPackage(String packageType)
+	{
+		boolean flag = false;
+
+		printMethodName();
+		
+		if(isWebElementPresent(addPackageBtn, 1))
+			performClickElement(addPackageBtn);
+		
+		performClickElement(packagePricing);
+		sendKeys(packagePricingInput, packageType);
+		performClickElement(packageFilterBtn);
+		performClickElement(selectOption);
+		
+		if(fillPackageDetails())
+			flag = true;
+			
+		
+		return flag;
+	}
+	
+	public boolean fillPackageDetails()
+	{
+		boolean flag = false;
+		String soldValue = "999999";
+		
+		if(getAttribute(salesUserField,"text").contains("Select"))
+			changeSalesUser();
+			
+		performClickElement(event);
+		sendKeys(eventInput,"Regular");
+		selectByVisibleText(geoGroup, "India");
+
+		if(isWebElementPresent(impressionUnits, 1))
+			sendKeys(impressionUnits, "10");
+		
+		sendKeys(sold, soldValue);
+		
+		if(performClickElement(saveBtn))
+			flag = true;
+		
+		return flag;
+	}
+	
+	public boolean changeSalesUser()
+	{
+		boolean flag = false;
+
+		printMethodName();
+		
+		if(performClickElement(salesUserField))
+		{
+			String currentValue = getAttribute(salesUserField, "text");
+			if(checkDDOptions(salesUserDDOption,"Not_"+currentValue))
+				flag = true;
+		}
+		return flag;
+	}
+	
+	public boolean verifyOrderCreation()
+	{
+		boolean flag = false,directOrderFlag = false, agencyOrderFlag = false;
+
+		printName();
+		
+		/*driver.get(directURL);
+		if(proceedForOrderCreation("Direct"))
+			if(performClickElement(submitApprovalBtn))
+			{
+				directURL = driver.getCurrentUrl();
+				directOrderFlag = true;
+				System.out.println("---> Order Direct URL = "+directURL);
+			}*/
+		
+		driver.get(agencyURL);
+		if(proceedForOrderCreation("Agency"))
+			if(performClickElement(submitApprovalBtn))
+			{
+				agencyURL = driver.getCurrentUrl();
+				agencyOrderFlag = true;
+				System.out.println("---> Order Agency URL = "+agencyURL);
+			}
+		
+		if(agencyOrderFlag)
+			flag = true;
+		
+		return flag;
+	}
+	
+	public boolean proceedForOrderCreation(String directAgency)
+	{
+		boolean flag = false;
+
+		printMethodName();
+		
+		performClickElement(createOrderBtn);
+		driver.switchTo().activeElement();
+		checkGSTFieldsAtOrderCreation();
+		performClickElement(submitBtn);
+		
+		if(RoRefCampaignNameAttachment(directAgency, roREF, roCampaignName, getDate("Current"), attachmentPath ))
+			flag = true;
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeAdvertiser(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			performClickElement(advertiser);
+			if(updateField(advertiserInput, advertiserDDOption, newAdv))
+			{
+				checkGSTField(advGstField, advGstDDOption);
+				if(submitProposal())
+					if(performClickElement(submitApprovalBtn))
+						flag = true;
+			}
+		}	
+			
+		return flag;
+	}
+	
+	public boolean openEditOrder(String directAgency)
+	{ 
+		boolean flag = false;
+
+		printMethodName();
+		
+		if(loginWithUser(directAgency, "ROLE_SALES_EXEC"))
+			if(editableOrder())
+				flag = true;
+		
+		return flag;
+	}
+	
+	public boolean editableOrder()
+	{
+		boolean flag = false,  recallFlag = false, editFlag = false;
+
+		printMethodName();
+		
+		if(!isWebElementPresent(saveProposalOrder, 1) || !isWebElementPresent(addPackageBtn, 1))
+		{
+			if(isWebElementPresent(recallBtn, 1))
+			{
+				if(performClickElement(recallBtn))
+					recallFlag = true;
+				sleep(1000);
+			}
+			if(isWebElementPresent(editOrdersBtn, 1))
+				if(performClickElement(editOrdersBtn))
+					editFlag = true;
+		}
+		else
+			flag = true;
+		
+		if(recallFlag)
+		{
+			if(editFlag)
+				flag = true;
+		}
+		else
+		{
+			if(editFlag)
+				flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public String nextCount(String field)
+	{
+		String days = getAttribute(impressionUnits, "value");
+		int intDays = Integer.valueOf(days);
+		int newDays = intDays+1;
+		
+		return String.valueOf(newDays);
+	}
+	
+	public boolean removePackage()
+	{
+		boolean flag = false;
+
+		printMethodName();
+		
+		if(performClickElement(packageDeleteBtn))
+			if(performClickElement(alertOK))
+				if(performClickElement(successAlert))
+					flag = true;
+		
+		return flag;
+	}
+	
+	public boolean changeUser(String field, String fieldInput, String value)
+	{
+		boolean flag = false;
+
+		printMethodName();
+		
+		String searchByName;
+		if(value.equals("new_user"))
+			searchByName = ReadPropertyFile.readAppData(value);
+		else
+			searchByName = value;
+		
+		if(!getAttribute(field, "text").equals(searchByName))
+		{
+			performClickElement(field);
+			sendKeys(fieldInput, searchByName);
+			if(performClickElement(alertMsg))
+				flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean resetOthers(String userType)
+	{
+		boolean flag = false, csFlag = false, finFlag = false, comFlag = false, allFlag = false, adminFlag = false;
+
+		printMethodName();
+		
+		if(!userType.equals("All") && !userType.equals("Mukul"))
+		{
+			if(!userType.equals("CS"))
+				if(changeUser(csField, comFinCSDDInput, defaultCSValue))
+					csFlag = true;
+			
+			if(!userType.equals("Finance"))
+				if(changeUser(financeField, comFinCSDDInput, defaultFinValue))
+					finFlag = true;
+	
+			if(!userType.equals("Commercial"))
+				if(changeUser(commercialField, comFinCSDDInput, defaultComValue))
+					comFlag = true;
+		}
+		else if(userType.equals("Mukul"))
+		{
+			if(changeUser(csField, comFinCSDDInput, adminCSValue))
+				if(changeUser(financeField, comFinCSDDInput, adminFinValue))
+					if(changeUser(commercialField, comFinCSDDInput, adminComValue))
+						adminFlag = true;
+		}
+		else
+		{
+			if(changeUser(csField, comFinCSDDInput, defaultCSValue))
+				if(changeUser(financeField, comFinCSDDInput, defaultFinValue))
+					if(changeUser(commercialField, comFinCSDDInput, defaultComValue))
+						allFlag = true;
+		}
+		
+		if(userType.equals("CS"))
+			if(finFlag && comFlag)
+				flag = true;
+		
+		if(userType.equals("Finance"))
+			if(csFlag && comFlag)
+				flag = true;
+		
+		if(userType.equals("Commercial"))
+			if(finFlag && csFlag)
+				flag = true;
+		
+		if(userType.equals("All"))
+			flag = allFlag;
+		
+		if(userType.equals("Mukul"))
+			flag = adminFlag;
+		
+		return flag;
+	}
+	
+	public boolean updateField(String field, String ddOption, String newValue)
+	{
+		boolean flag = false;
+
+		printMethodName();
+		
+		performClickElement(field);
+		waitUntilElementPresenceLocated(field).sendKeys(newValue);
+		sleep(1000);
+		
+		if(checkDDOptions(ddOption, newValue))
+			flag = true;
+		
+		return flag;
+	}
+	
+	public boolean checkDDOptions(String field, String expectedValue)
+	{
+		boolean flag = false, limitReached=false;
+
+		printMethodName();
+		
+		int i=1,j=2;
+		boolean onceFlag = true;
+		String[] Field = null, acceptedValue = null;
+		try {
+		Field = field.split("/li");
+		i = Integer.valueOf(Field[1].substring(1, 2));
+		
+		if(expectedValue.contains("Not_"))
+		{
+			acceptedValue = expectedValue.split("Not_");
+			if(acceptedValue[1].contains("×"))
+			{
+				String text = acceptedValue[1].replace("×", "");
+				acceptedValue[1] = text.trim();
+			}
+		}
+			
+		}catch(Exception e) 
+		{System.out.println("Field unable to split - checkDDOptions - Field = "+field);
+		System.out.println("--> Expected Value = "+expectedValue);}
+		
+		do
+		{
+			if(isWebElementPresent(field, 1))
+			{
+				if(expectedValue.contains("Not_"))
+				{
+					if(!getAttribute(field, "text").contains(acceptedValue[1]) && !getAttribute(field, "text").contains("Select"))
+					{
+						performClickElement(field);
+						flag = true;
+					}
+					else if(getAttribute(field, "text").contains("Business Dropped") && onceFlag)
+					{
+						j=1;
+						onceFlag = false;
+					}
+				}
+				else
+				{
+					if(getAttribute(field, "text").contains(expectedValue))
+					{
+						performClickElement(field);
+						flag = true;
+					}
+				}
+			}
+			else
+				limitReached = true;
+			
+			Field[1] = Field[1].replace(String.valueOf(i), String.valueOf(j));
+			field = Field[0]+"/li"+Field[1];
+			i = j;
+			j++;
+		}while(!flag && !limitReached);
+		
+		if(!flag)
+			System.out.println("---> Expected Value Not Found = "+expectedValue);
+		
+		return flag;
+	}
+	
+	public boolean verifyApprovalWindow(String directAgency, String user, String expectation)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		loginWithUser(directAgency, user);
+			
+		if(expectation.equals("No Window"))
+		{	if(!isWebElementPresent(approvalWindowComment, 1))
+				flag = true;
+		}	
+		else
+		{
+			if(isWebElementPresent(approvalWindowComment, 1))
+				flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean giveApproval(String directAgency, String user, String expectedState)
+	{
+		boolean flag = false;
+
+		printMethodName();
+		
+		loginWithUser(directAgency, user);
+		
+		if(getAttribute(approvalStatus, "text").contains("Pending") && isWebElementPresent(approvalWindowComment, 1))
+		{
+			sendKeys(approvalWindowComment, "Approved");
+			performClickElement(approvalWindowBtn);
+			pageRefresh();
+			performClickElement(userApprovalStatus);
+			String userROStatusString = userROStatus.replace("UserType", user);
+			if(getAttribute(userROStatusString, "text").contains(expectedState))	
+				flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyApprovalWindowAt(String directAgency, String comCheck, String finCheck, String csCheck, String callingMethod)
+	{
+		boolean flag = false, comFlag = false, finFlag = false, csFlag = false, finalStatus = false;
+		
+		printMethodName();
+		
+		String url = driver.getCurrentUrl();
+		String comLogin = "Commercial", csLogin = "CS", finLogin = "Finance";
+		
+		if(comCheck.contains(" Changed"))
+			comLogin = comCheck;
+		
+		if(finCheck.contains(" Changed"))
+			finLogin = finCheck;
+		
+		if(csCheck.contains(" Changed"))
+			csLogin = csCheck;
+		
+		if(comCheck.contains("No "))
+		{
+			comFlag = verifyApprovalWindow(directAgency, comLogin,"No Window");
+			if(!comFlag)
+				System.out.println(callingMethod+"---> Approval Window Coming for Commercial");
+		}
+		else
+		{
+			comFlag = verifyApprovalWindow(directAgency, comLogin,"Window Expected");
+			if(comFlag && comCheck.contains(" Approved"))
+			{
+				comFlag = giveApproval(directAgency, comLogin,"Approved");
+				if(!comFlag)
+					System.out.println(callingMethod+"---> Commercial Unable To Approve");
+			}
+			if(!comFlag)
+				System.out.println(callingMethod+"---> Commercial - Window Not Available For Approval");
+		}
+			
+		
+		if(finCheck.contains("No "))
+		{
+			finFlag = verifyApprovalWindow(directAgency, finLogin,"No Window");
+			if(!finFlag)
+				System.out.println(callingMethod+"---> Approval Window Coming for Finance");
+		}
+		else
+		{
+			finFlag = verifyApprovalWindow(directAgency, finLogin,"Window Expected");
+			if(finFlag && finCheck.contains(" Approved"))
+			{
+				finFlag = giveApproval(directAgency, finLogin,"Approved");
+				if(!finFlag)
+					System.out.println(callingMethod+"---> Finance Unable To Approve");
+			}
+			if(!finFlag)
+				System.out.println(callingMethod+"---> Finance - Window Not Available For Approval");
+		}
+		
+		
+		if(csCheck.contains("No "))
+		{
+			csFlag = verifyApprovalWindow(directAgency, csLogin,"No Window");
+			if(!csFlag)
+				System.out.println(callingMethod+"---> Approval Window Coming for CS");
+		}
+		else
+		{
+			csFlag = verifyApprovalWindow(directAgency, csLogin,"Window Expected");
+			if(csFlag && csCheck.contains(" Approved"))
+			{
+				csFlag = giveApproval(directAgency, csLogin,"Approved");
+				if(!csFlag)
+					System.out.println(callingMethod+"---> CS Unable To Approve");
+			}
+			if(!csFlag)
+				System.out.println(callingMethod+"---> CS - Window Not Available For Approval");
+		}
+		
+		if(getAttribute(approvalStatus, "text").contains("Approved"))
+			finalStatus = true;
+		
+		if(comFlag && finFlag && csFlag && finalStatus)
+			flag = true;
+		
+		if(callingMethod.equalsIgnoreCase("ApproveChangeSalesUser"))
+			resetSalesUser(directAgency);
+		
+		if(callingMethod.equalsIgnoreCase("ApproveChangeInStage"))
+			resetStage(directAgency);
+		
+		setToApprove(directAgency,callingMethod);
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeAgency(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			performClickElement(agencyField);
+			if(updateField(agencyFieldInput, agencyDDOption, newAgency))
+			{
+				checkGSTField(agencyGstField, agencyGstDDOption);
+				performClickElement(salesIndustryDD);
+				sendKeys(salesIndustrySrch,salesIndustryDDValue);
+				
+				if(submitProposal())
+					if(performClickElement(submitApprovalBtn))
+						flag = true;
+			}
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeBillableAdvertiser(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			WebElement element = waitUntilElementPresenceLocated(billableAgencyCheckbox,1);
+			if(!element.isSelected())
+				performClickElement(billableAgencyCheckbox);
+			performClickElement(billableAgencyField);
+			if(updateField(billableAgencyInput, billableAgencyDDOption, newBilAdv))
+			{
+				checkGSTField(billableAgencyGstField, billableAgencyGstDDOption);
+				if(submitProposal())
+					if(performClickElement(submitApprovalBtn))
+						flag = true;
+			}
+		}
+			
+		return flag;
+	}
+	
+	public boolean verifyChangeBillableAgency(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			WebElement element = waitUntilElementPresenceLocated(billableAgencyCheckbox,1);
+			if(!element.isSelected())
+				performClickElement(billableAgencyCheckbox);
+			performClickElement(billableAgencyField);
+			if(updateField(billableAgencyInput, billableAgencyDDOption, newBilAgency))
+			{
+				checkGSTField(billableAgencyGstField, billableAgencyGstDDOption);
+				if(submitProposal())
+					if(performClickElement(submitApprovalBtn))
+						flag = true;			}
+		}	
+			
+		return flag;
+	}
+	
+	public boolean verifyChangeBrand(String directAgency, String newBrand)
+	{
+		boolean flag = false;
+		
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			textClear(brand);
+			sendKeys(brand, newBrand);
+			if(submitProposal())
+					flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeStage(String directAgency)
+	{
+		boolean flag = false;
+		
+		printName();
+		
+		if(openEditOrder(directAgency))
+			if(performClickElement(stageField))
+			{
+				String currentValue = getAttribute(stageField, "text");
+				if(checkDDOptions(stageDDOption,"Not_"+currentValue))
+					if(submitProposal())
+							flag = true;
+			}
+		
+		return flag;
+	}
+	
+	public void resetStage(String directAgency)
+	{
+		verifyChangeStage(directAgency);
+	}
+	
+	public boolean verifyChangeCustomSolution(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(customSolutionCheckbox))
+				if(submitProposal())
+						flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeCloseDate(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		String nextDate = getDate("Next");
+		String newCalendarDate = dateCalendar.replace("newDat", nextDate);
+		
+		if(openEditOrder(directAgency))
+		{
+			performClickElement(closureDate);
+			if(performClickElement(newCalendarDate))
+				if(submitProposal())
+					flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeCampaignRefName(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(loginWithUser(directAgency, "Finance"))
+			if(editableOrder())
+				if(getAttribute(originalROField, "type").equals("text"))
+				{
+					sendKeys(originalROField, newCampaignRefName);
+					if(performClickElement(saveOrder))
+						if(performClickElement(submitApprovalBtn))
+							flag = true;
+				}
+			
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeAgencyDiscount(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+			if(isWebElementPresent(agencyCommissionCheckbox, 1))
+			{
+				performClickElement(agencyCommissionCheckbox);
+				if(submitProposal())
+					if(performClickElement(submitApprovalBtn))
+						flag = true;
+			}
+		
+		return flag;
+	}
+	
+	
+	
+	public String getDate(String currentNext)
+	{
+		Date dt = new Date();
+		Calendar cal = Calendar.getInstance();
+		String newDate;
+		
+		cal.setTime(dt);
+		
+		if(currentNext.equals("Current"))
+		{
+			dt = cal.getTime();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd");
+			newDate = sdf.format(dt);
+		}
+		else
+		{
+			
+			cal.add(Calendar.DATE, 1);
+			dt = cal.getTime();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd");
+			newDate = sdf.format(dt);
+		}
+		
+		return newDate;
+			
+	}
+
+	public boolean verifyChangeCSUser(String directAgency, String newValue)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			resetOthers("CS");
+			if(changeUser(csField, comFinCSDDInput, newValue))
+				if(submitProposal())
+					flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeSalesUser(String directAgency)
+	{
+		boolean flag = false;
+		
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(editPackageBtn))
+				if(isWebElementPresent(salesUserField, 1))
+					if(changeSalesUser())
+						if(performClickElement(saveBtn))
+							if(submitProposal())
+								if(getAttribute(approvalStatus, "text").contains("Waiting for submission") && !isWebElementPresent(submitApprovalBtn))
+								{
+									if(loginWithUser(directAgency, "Changed_User"))
+										if(performClickElement(submitApprovalBtn))
+											flag = true;
+										
+								}
+								else
+									flag = true;
+								
+		}
+		
+		return flag;
+	}
+	
+	public void resetSalesUser(String directAgency)
+	{
+		String SEName = seName.replace(".", " ");
+		
+		if(loginWithUser(directAgency, "Changed_User"))
+			if(editableOrder())
+				if(performClickElement(editPackageBtn))
+						if(performClickElement(salesUserField))
+						{
+							sendKeys(salesUserInput, SEName);
+							if(performClickElement(saveBtn))
+								submitProposal();
+						}
+	}
+	
+	public boolean verifyChangeFinanceUser(String directAgency, String newValue)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			resetOthers("Finance");
+			if(changeUser(financeField, comFinCSDDInput, newValue))
+				if(submitProposal())
+					flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeCommUser(String directAgency, String newValue)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			resetOthers("Commercial");
+			if(changeUser(commercialField, comFinCSDDInput, newValue))
+				if(submitProposal())
+					flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeToDefaultUser(String directAgency)
+	{
+		boolean flag=false;
+		printName();
+		printMethodName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(resetOthers("All"))
+				if(submitProposal())
+					flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyPackageAddition(String directAgency, String packageType)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(addPackage(packageType))
+				if(submitProposal())
+					if(performClickElement(submitApprovalBtn))
+						flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyPackageRemoval(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(removePackage())
+				if(submitProposal())
+					if(performClickElement(submitApprovalBtn))
+						flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeDuration(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(editPackageBtn))
+				if(isWebElementPresent(impressionUnits, 1))
+				{
+					if(performClickElement(dateRangeField))
+						performClickElement(next7DaysLink);
+					if(performClickElement(saveBtn))
+						if(submitProposal())
+							if(performClickElement(submitApprovalBtn))
+								flag = true;
+				}
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeJVCDeal(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(jvcCheckbox))
+				if(submitProposal())
+					if(performClickElement(submitApprovalBtn))
+						flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeRORefCampNameAttachment(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(markObsoleteCheckbox))
+				if(RoRefCampaignNameAttachment(directAgency, newroREF, newroCampaignName, getDate("Next"), newAttachmentPath ))
+					if(performClickElement(submitApprovalBtn))
+						flag = true;
+		}
+		
+		return flag;
+		
+	}
+	
+	public boolean RoRefCampaignNameAttachment(String directAgency, String refText, String campName, String receiveDate, String imagePath)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		sendKeys(roRef, refText);
+		sendKeys(campaignName, campName);
+		performClickElement(roReceiveDate);
+		
+		String newCalendarDate = dateCalendar.replace("newDat", receiveDate);
+		performClickElement(newCalendarDate);
+		
+		performClickElement(attachFileBtn);
+		
+		if(uploadFile(imagePath))
+			performClickElement(saveROBtn);
+		
+		if(performClickElement(saveProposalOrder))
+		{
+			if(isWebElementPresent(roDetailTable, 1))
+			{
+				if(directAgency.equals("Direct"))
+					directURL = driver.getCurrentUrl();
+				else
+					agencyURL = driver.getCurrentUrl();
+				
+				flag = true;
+			}
+			else
+				System.out.println("#### RO Detail Table Not Visible - RoRefCampaignNameAttachment");
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeMediaType(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(orderMediaField))
+			{
+				String currentValue = getAttribute(orderMediaField, "text");
+				if(checkDDOptions(orderMediaDDOption,"Not_"+currentValue))
+					if(submitProposal())
+						if(performClickElement(submitApprovalBtn))
+							flag = true;
+			}
+		}
+			
+		
+		return flag;
+	}
+	
+	public boolean verifyMarkColombia(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(markColombiaCheckbox))
+				if(performClickElement(alertOK))
+					if(performClickElement(successOkBtn))
+						if(submitProposal())
+							flag = true;
+		}
+			
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeSalesIndustry(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(salesIndustryField))
+			{
+				String currentValue = getAttribute(salesIndustryField, "text");
+				if(checkDDOptions(salesIndustryDDOption,"Not_"+currentValue))
+					if(submitProposal())
+						flag = true;
+			}
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeGrossRate(String directAgency)
+	{
+		boolean flag = false;
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(editPackageBtn))
+				if(isWebElementPresent(impressionUnits, 1))
+				{
+					String actualRate = getAttribute(rateCard, "Text");
+					String soldFor = actualRate.substring(0,actualRate.indexOf(" "));
+					sendKeys(sold, soldFor);
+					if(performClickElement(saveBtn))
+						if(submitProposal())
+							if(performClickElement(submitApprovalBtn))
+								flag = true;
+				}
+		}
+		return flag;
+	}
+	
+	public boolean verifyChangeSPOC(String directAgency)
+	{
+		boolean flag = false, spocFlag = true;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(editPackageBtn))
+			{
+				if(!isWebElementPresent(industrySpocField, 1))
+					performClickElement(teamSpocBtn);
+				if(performClickElement(industrySpocField))
+					selectOption(industryDDOption);
+				else
+					spocFlag = false;
+				if(performClickElement(customSolutionSpocField))
+					selectOption(customSolutionDDOption);
+				else
+					spocFlag = false;
+				if(performClickElement(programmaticSpocField))
+					selectOption(programmaticSpocDDOption);
+				else
+					spocFlag = false;
+				if(performClickElement(productSpocField))
+					selectOption(productDDOption);
+				else
+					spocFlag = false;
+				if(performClickElement(clientSuccessSpocField))
+					selectOption(clientSuccessDDOption);
+				else
+					spocFlag = false;
+			}
+			
+			if(performClickElement(saveBtn))
+				if(submitProposal())
+					if(spocFlag)
+						flag = true;
+		}		
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeBCCLSubGroup(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+			if(performClickElement(bcclSubGroupField))
+			{
+				String currentValue = getAttribute(bcclSubGroupField, "text");
+				if(checkDDOptions(bcclSubGroupDDOption, "Not_"+currentValue))
+						if(submitProposal())
+							flag = true;
+			}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeProgrammaticDeal(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+			if(performClickElement(programmaticDealField))
+			{
+				String currentValue = getAttribute(programmaticDealField, "text");
+				if(checkDDOptions(programmaticDealDDOption, "Not_"+currentValue))
+						if(submitProposal())
+							if(performClickElement(submitApprovalBtn))
+								flag = true;
+			}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeMediation(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+			if(performClickElement(mediationCheckbox))
+					if(submitProposal())
+						if(performClickElement(submitApprovalBtn))
+							flag = true;
+		
+		return flag;
+	}
+	
+	public boolean verifyChangePitchedForSS(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+			if(performClickElement(pitchedSSCheckbox))
+					if(submitProposal())
+						flag = true;
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeCostType(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+			if(performClickElement(costTypeCheckbox))
+					if(submitProposal())
+						flag = true;
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeNonNative(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(!isWebElementPresent(nonNativeBtn, 1))
+				performClickElement(viewLineitemCheckbox);
+			
+			if(performClickElement(nonNativeBtn))
+				if(performClickElement(dialogOK))
+					if(submitProposal())
+						flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeColombia(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(!isWebElementPresent(colombiaBtn, 1))
+				performClickElement(viewLineitemCheckbox);
+			
+			if(performClickElement(colombiaBtn))
+				if(performClickElement(dialogOK))
+					if(submitProposal())
+						flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeTaxable(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(!isWebElementPresent(taxableBtn, 1))
+				performClickElement(viewLineitemCheckbox);
+			
+			if(performClickElement(taxableBtn))
+				if(performClickElement(dialogOK))
+					if(submitProposal())
+						if(performClickElement(submitApprovalBtn))
+							flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeAdvertiserGST(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			String currentValue = getAttribute(advGstField,"text");
+			if(performClickElement(advGstField))
+				if(checkDDOptions(advGstDDOption, "Not_"+currentValue))
+					if(submitProposal())
+						if(performClickElement(submitApprovalBtn))
+							flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeAgencyGST(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			String currentValue = getAttribute(agencyGstField,"text");
+			if(performClickElement(agencyGstField))
+				if(checkDDOptions(agencyGstDDOption, "Not_"+currentValue))
+					if(submitProposal())
+						if(performClickElement(submitApprovalBtn))
+							flag = true;
+		}
+		
+		return flag;
+	}
+	
+	public boolean verifyChangeGoal(String directAgency)
+	{
+		boolean flag = false;
+
+		printName();
+		
+		if(openEditOrder(directAgency))
+		{
+			if(performClickElement(editPackageBtn))
+				if(isWebElementPresent(impressionUnits, 1))
+				{
+					sendKeys(impressionUnits, nextCount(impressionUnits));
+					if(performClickElement(saveBtn))
+						if(submitProposal())
+							flag = true;
+				}
+		}
+		
+		return flag;
+	}
+	
+	public boolean setToApprove(String directAgency, String callingMethod)
+	{
+		boolean flag = false;
+		
+		if(!getAttribute(approvalStatus, "text").contains("Approved"))
+			if(loginWithUser(directAgency, "Changed_User"))
+				if(editableOrder())
+					if(resetOthers("Mukul"))
+						if(submitProposal())
+							if(performClickElement(submitApprovalBtn))
+							{
+								while(isWebElementPresent(approvalWindowComment, 1))
+								{
+									sendKeys(approvalWindowComment, "Approved");
+									performClickElement(approvalWindowBtn);
+								}
+								if(editableOrder())
+									if(resetOthers("All"))
+										if(submitProposal())
+											flag = true;
+							}
+		
+		if(flag)
+			System.out.println("---***--- Status Changed to Approve - "+callingMethod);
+			
+		return flag;
+	}
+}

@@ -1,0 +1,56 @@
+package com.til.colombia.expresso.test.api;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.testng.annotations.Test;
+
+import com.til.colombia.expresso.apiConfig.ApiPath;
+import com.til.colombia.expresso.apiConfig.ApiVerification;
+import com.til.colombia.expresso.apiConfig.HttpMethods;
+import com.til.colombia.expresso.base.BaseTestSetup;
+
+import io.restassured.response.Response;
+
+public class DistributedInvoiceControllerTest extends BaseTestSetup {
+	public String baseURL= super.apiBaseURL;
+	
+	@Test
+	public void createDistributeInvoice() {
+        String url=baseURL+ApiPath.Post_Create_Distribute_Invoice;
+        
+        Map<String, String> param = new HashMap<String,String>();
+        param.put("invoiceId", "2229592");
+        param.put("type", "1");
+		
+		Response re= HttpMethods.postWithParam(param,access_Token, url);
+		re.prettyPrint();
+		ApiVerification.responseCodeValidation(re, 200);
+		if(re.getBody().asString().contains("error")) {
+			ApiVerification.responseKeyValidationFromJsonpath(re, "error", "Parent invoice is In-Active !!!!");
+		}
+		else {
+			ApiVerification.responseKeyValidationFromJsonpath(re, "status", "4");
+		}
+			
+	}
+	
+	@Test
+	public void distributeDiscountOnLineitem() {
+        String url=baseURL+ApiPath.Post_Distribute_Discount_On_Lineitem;
+        
+        Map<String, String> param = new HashMap<String,String>();
+        param.put("invoiceId", "1549085");
+		
+		Response re= HttpMethods.postWithParam(param,access_Token, url);
+		re.prettyPrint();
+		ApiVerification.responseCodeValidation(re, 200);
+		
+		//ApiVerification.responseKeyValidationFromJsonpath(re, url, url);
+		//ApiVerification.responseKeyValidationFromResponseBody(re, "clientName");
+		
+		
+	}
+	
+
+}

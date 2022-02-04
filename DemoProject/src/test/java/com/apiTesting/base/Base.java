@@ -14,7 +14,7 @@ import org.testng.annotations.Listeners;
 
 import com.apiTesting.Listner.ExtentListner;
 import com.apiTesting.Listner.ExtentManager;
-import com.apiTesting.apiConfig.ApiPath;
+import com.apiTesting.apiConfigs.ApiPath;
 import com.aventstack.extentreports.Status;
 
 import io.restassured.RestAssured;
@@ -54,20 +54,23 @@ public class Base extends ExtentListner {
 	  ExtentManager.setExtent();
 	 }
 	
-	@BeforeClass
 	
-		
+	
+	@BeforeClass
 		public void getAccessToken() {
 		
 			String baseURL=readFromPropertyFile("baseUrl");
 			String url=baseURL+ApiPath.Post_Generate_Token;
+			//LOGGER.info(url);
 			Response re= RestAssured.given().queryParams("grant_type", "password")
 					.param("username", "mukul.shishodia")
 					.param("password", "google#123")
 					.auth().basic("colombia-1","secret")
 					.log().all().post(url);
 			re.prettyPrint();
+			//LOGGER.info("Getting response");
 			String access_Token = re.jsonPath().get("access_token");
+			//LOGGER.info("Successfully get token="+access_Token);
 			System.out.println("token is="+access_Token);
 			 this.access_Token=access_Token;	
 		}

@@ -1,0 +1,101 @@
+package com.til.colombia.expresso.utility;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.openqa.selenium.WebDriver;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import com.til.colombia.expresso.base.BaseTestSetup;
+import com.til.colombia.expresso.pageobjects.prod.LoginPage;
+
+public class JSONReader extends BaseTestSetup
+{
+	private WebDriver driver = getDriver();
+	
+	public String launchJsonUrl(String json) {
+		String pagesource="";
+		
+		try {
+		String jsonUrl = formatJSON(json);
+		driver.get(jsonUrl);
+		pagesource = driver.getPageSource();
+		}catch(Exception e) {e.printStackTrace();}
+		
+		return pagesource;
+	}
+
+	public String formatJSON(String url)
+	{
+		String dateString= "";
+		Date currentDate = new Date();
+	  	Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		
+		if(System.getProperty("env").equalsIgnoreCase("PROD"))
+			url = url.replace("ENV", "https://");
+		else if(System.getProperty("env").equalsIgnoreCase("STAG"))
+			url = url.replace("ENV", "https://stg");
+		else 
+			url = url.replace("ENV", "https://qa");
+		
+		if(!url.contains("rdashboard/publisherResource"))
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+			if(1<= currentDate.getDate() && currentDate.getDate()<= 6)
+				cal.add(Calendar.MONTH, - 1);
+			
+			dateString = sdf.format(cal.getTime());
+			
+			url= url.replace("currMonth", dateString);
+		}
+		else
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");         /*2019-08-01 */
+			if(1<= currentDate.getDate() && currentDate.getDate()<= 6)
+			{
+				cal.add(Calendar.MONTH, - 1);
+			}
+			
+			cal.set(Calendar.DATE, 01);
+			dateString = sdf.format(cal.getTime());
+			url= url.replace("startDATE", dateString);
+			
+			
+			cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+			dateString = sdf.format(cal.getTime());
+			url= url.replace("endDATE", dateString);
+		}
+	  	
+		return url;
+	}
+	
+	// get the data from .json file
+	public static Map<String, String> readJsonFile(String methodName) throws JsonIOException, JsonSyntaxException, FileNotFoundException {
+	// String filePath=System.getProperty("user.dir")+File.separator+"src"+File.separator+"test"+File.separator+"resource"+File.separator+"Payload"+File.separator+"user.json";
+	 String filePath="D:\\New folder (2)\\qa-expressosanity\\src\\test\\resources\\Payload\\distributedInvoiceController.json";
+	 JsonElement jsonele= (new JsonParser()).parse(new FileReader(filePath));
+     JsonObject object= jsonele.getAsJsonObject();
+     JsonElement ele = object.get(methodName);
+     JsonObject obj= ele.getAsJsonObject();
+     Map<String, String> map = new HashMap<String, String>();
+     Iterator iterator=obj.entrySet().iterator();
+     while(iterator.hasNext()) {
+    	Entry entry= (Entry) iterator.next();
+    	map.put(entry.getKey().toString(), entry.getValue().toString());
+     }
+	return map;
+}
+
+}

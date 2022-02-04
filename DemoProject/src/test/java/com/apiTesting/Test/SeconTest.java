@@ -5,9 +5,9 @@ package com.apiTesting.Test;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.apiTesting.apiConfig.ApiPath;
-import com.apiTesting.apiConfig.ApiVerification;
-import com.apiTesting.apiConfig.HttpMethods;
+import com.apiTesting.apiConfigs.ApiPath;
+import com.apiTesting.apiConfigs.ApiVerification;
+import com.apiTesting.apiConfigs.HttpMethods;
 import com.apiTesting.base.Base;
 import com.aventstack.extentreports.Status;
 
@@ -25,6 +25,7 @@ public class SeconTest extends Base {
 		
 		Response re= HttpMethods.getWithAuthentication(access_Token, url);
 		re.prettyPrint();
+		
 		ApiVerification.responseCodeValidation(re, 200);
 		ApiVerification.responseKeyValidationFromResponseBody(re, "2021");
 		test.log(Status.INFO, "getAllFinancialYear test is end......");
@@ -38,7 +39,8 @@ public class SeconTest extends Base {
 		Response re= HttpMethods.postWithParam("invoiceId", "2231765",access_Token, url);
 		re.prettyPrint();
 		ApiVerification.responseCodeValidation(re, 200);
-		ApiVerification.responseKeyValidationFromJsonpath(re, "roId");
+		ApiVerification.responseKeyValidationFromJsonpath(re, "invoice.clientName","RICHEMONT");
+		ApiVerification.responseKeyValidationFromResponseBody(re, "clientName");
 		
 		test.log(Status.INFO, "createCustomizeInvoice test is end......");
 		

@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="content"/>
+		<item key="selection" value="package_path"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="content"/>
-			<item value="order_header"/>
-			<item value="camp_order_value"/>
-			<item value="availability_delete_saved_filter_btn"/>
-			<item value="mybooking_uploadfile"/>
-			<item value="textbox_expresso_id"/>
-			<item value="orphan_map_btn"/>
-			<item value="expresso_order_name"/>
-			<item value="orphan_action"/>
-			<item value="orphan_link"/>
-			<item value="url"/>
-			<item value="select count(til_dropdown_id) from til_dropdown where status"/>
-			<item value="select count(til_entity_id) from til_entity where status"/>
-			<item value="select count(til_entity_custom_parameter_id) from til_entity_custom_parameter where status"/>
-			<item value="select count(distinct(dropdown_id)) from til_dropdown_elem_mapping where status"/>
+			<item value="package_path"/>
+			<item value="distribute_link"/>
+			<item value="option_sync_config"/>
+			<item value="option_generate_invoice"/>
+			<item value="view_lineitem_checkbox"/>
+			<item value="lineitem"/>
+			<item value="linneitem"/>
+			<item value="sync_link"/>
+			<item value="invoice_id_link"/>
+			<item value="campaign_path"/>
+			<item value="action_btn"/>
+			<item value="new_bil_agency"/>
+			<item value="adminCsValue"/>
+			<item value="default_agency"/>
+			<item value="sales_industry_dd"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="955"/>
-		<item key="DIALOG_Y_ORIGIN" value="87"/>
+		<item key="DIALOG_X_ORIGIN" value="990"/>
+		<item key="DIALOG_Y_ORIGIN" value="151"/>
 		<item key="DIALOG_WIDTH" value="284"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

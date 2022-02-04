@@ -5,10 +5,10 @@ import java.util.Map;
 
 import org.testng.annotations.Test;
 
-import com.apiTesting.apiConfig.ApiPath;
-import com.apiTesting.apiConfig.ApiVerification;
-import com.apiTesting.apiConfig.HttpMethods;
-import com.apiTesting.apiConfig.ReadJsonData;
+import com.apiTesting.apiConfigs.ApiPath;
+import com.apiTesting.apiConfigs.ApiVerification;
+import com.apiTesting.apiConfigs.HttpMethods;
+import com.apiTesting.apiConfigs.ReadJsonData;
 import com.apiTesting.base.Base;
 import com.aventstack.extentreports.Status;
 import com.google.gson.JsonIOException;

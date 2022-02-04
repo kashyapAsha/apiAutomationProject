@@ -1,0 +1,241 @@
+package com.til.colombia.expresso.test.regression;
+
+import java.io.IOException;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.til.colombia.expresso.pageobjects.qa.AdminSiteStructurePageObjects;
+
+public class SiteStructure extends AdminSiteStructurePageObjects {
+	
+	@Test(priority = 1,enabled=false)
+	public void VerifySearchFeatureOfManageSite() throws InterruptedException {
+		Assert.assertEquals(verifySearchNavigation(), true);
+	}
+
+	@Test(priority = 2,enabled=false)
+	public void VerifyAddFeatureOfManageSite() throws InterruptedException {
+		Assert.assertEquals(verifyAddNavigationFunctionality(), true);
+	}
+
+	@Test(priority = 3,enabled=false)
+	public void VerifyEditFeatureOfManageSite() throws InterruptedException {
+		Assert.assertEquals(verifyEditNavigationFunctionality(), true);
+	}
+
+	
+	@Test(priority = 4,enabled=false)
+	public void VerifySearchFeatureOfWebsite() throws InterruptedException {
+		Assert.assertEquals(verifySearchWebsite(), true);
+	}
+
+	@Test(priority = 5,enabled=false)
+	public void VerifyAddFeatureOfWebsite() throws InterruptedException {
+		Assert.assertEquals(verifyAddWebsiteFunctionality(), true);
+	}
+
+	@Test(priority = 6,enabled=false)
+	public void VerifyEditFeatureOfWebsite() throws InterruptedException {
+		Assert.assertEquals(verifyEditWebsiteFunctionality(), true);
+	}
+
+	
+	@Test(priority = 7,enabled=false)
+	public void VerifyWebsitePagination() throws InterruptedException {
+		Assert.assertEquals(checkPaginationOfWebsiteScreen(), true);
+	}
+
+	
+	
+	@Test(priority = 8,enabled=false)
+	public void VerifySearchFeatureOfWebSection() throws InterruptedException {
+		Assert.assertEquals(verifySearchWebSection(), true);
+	}
+
+	@Test(priority = 9,enabled=false)
+	public void VerifyAddFeatureOfWebSection() throws InterruptedException {
+		Assert.assertEquals(verifyAddWebSectionFunctionality(), true);
+	}
+
+	@Test(priority = 10,enabled=false)
+	public void VerifyEditFeatureOfWebSection() throws InterruptedException {
+		Assert.assertEquals(verifyEditWebSectionFunctionality(), true);
+	}
+
+	@Test(priority = 11,enabled=false)
+	public void VerifyWebSectionPagination() throws InterruptedException {
+		Assert.assertEquals(checkPaginationOfWebSectionScreen(), true);
+	}
+
+	@Test(priority = 12,enabled=false)
+	public void VerifyWebSectionWebsiteFilter() throws InterruptedException {
+		Assert.assertEquals(verifyWebSectionFilter(), true);
+	}
+
+
+	@Test(priority = 13,enabled=false)
+	public void VerifySearchFeatureOfWebSubSection() throws InterruptedException {
+		Assert.assertEquals(verifySearchWebSubSection(), true);
+	}
+
+	@Test(priority = 14,enabled=false)
+	public void VerifyAddFeatureOfWebSubSection() throws InterruptedException {
+		Assert.assertEquals(verifyAddWebSubSectionFunctionality(), true);
+	}
+
+	@Test(priority = 15,enabled=false)
+	public void VerifyEditFeatureOfWebSubSection() throws InterruptedException {
+		Assert.assertEquals(verifyEditWebSubSectionFunctionality(), true);
+	}
+	
+	@Test(priority = 16,enabled=false)
+	public void VerifyWebSubSectionPagination() throws InterruptedException {
+		Assert.assertEquals(checkPaginationOfWebSubSectionScreen(), true);
+	}
+
+	@Test(priority = 17,enabled=false)
+	public void VerifyWebSubSectionFilters() throws InterruptedException {
+		Assert.assertEquals(verifyWebSubSectionFilter(), true);
+	}
+
+	@Test(priority = 18,enabled=false)
+	public void VerifyAddFeatureOfInnerSubSection() throws InterruptedException {
+		Assert.assertEquals(verifyAddInnerSubsectionFunctionality(), true);
+	}
+
+	@Test(priority = 19)
+	public void VerifyAddFeatureOfEvents() throws InterruptedException {
+		Assert.assertEquals(verifyAddEventFunctionality(), true);
+	}
+
+	@Test(priority = 20,enabled=false)
+	public void VerifySearchFeatureOfEvents() throws InterruptedException {
+		Assert.assertEquals(verifySearchEvent(), true);
+	}
+	
+	
+
+	@Test(priority = 21,enabled=true)
+    public void VerifyDateField() throws InterruptedException {
+	Assert.assertEquals(verifyDateFieldOnEvent(), true);	
+	}
+	
+
+	@Test(priority = 22)
+	public void VerifyEditFeatureOfEvents() throws InterruptedException {
+		Assert.assertEquals(verifyEditEventsFunctionality(), true);
+
+	}
+	
+	@Test(priority = 23,enabled=false)
+	public void VerifyAddNewGoalTracker() throws InterruptedException {
+		Assert.assertEquals(verifyAddGoalTrackerFunctionality(), true);
+	}
+
+	@Test(priority = 24)
+	public void VerifyMandatoryFieldsOnAddGoalTrackerPage() throws InterruptedException {
+		Assert.assertEquals(checkMandatoryFieldsOnAddGoalTrackerPage(), true);
+	}
+
+	@Test(priority = 25)
+	public void VerifyEditGoalTrackerFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyEditGoalTrackerFunctionality(), true);
+	}
+	@Test(priority = 26)
+	public void VerifyAdslotSampleFileDownloadFunctionality() throws InterruptedException, IOException {
+		Assert.assertEquals(verifySampleFileDownloadFunctionality(), true);
+	}
+
+	@Test(priority = 27)
+	public void VerifyExcelImportWithDeployStatusYes() throws InterruptedException, IOException {
+		Assert.assertEquals(verifySampleFileUpload("Excel","Yes"), true);
+	}
+		
+	@Test(priority = 28)
+	public void VerifyExcelImportWithDeployStatusNo() throws InterruptedException, IOException {
+		Assert.assertEquals(verifySampleFileUpload("Excel","No"),true);
+	}
+
+	@Test(priority = 31)
+	public void VerifyWebsiteRatiosFilters() throws InterruptedException {
+		Assert.assertEquals(verifyFiltersOfWebsiteRatios(), true);
+	}
+	
+	@Test(priority = 32)
+	public void VerifyWebsiteRatiosExportFunctionality() throws InterruptedException, IOException {
+		Assert.assertEquals(verifyWebsiteRatiosExport(), true);
+	}
+	
+	@Test(priority = 33)
+	public void VerifyWebsiteRatiosAddFunctionality() throws InterruptedException, IOException {
+		Assert.assertEquals(verifyAddNewWebsiteRatios(), true);
+	}
+	@Test(priority = 34)
+	public void verifyAddFileTypeLp() throws InterruptedException {
+		Assert.assertEquals(checkAddFileTypeLp(), true);
+	}
+	@Test(priority = 35)
+	public void validateFileNameField() throws InterruptedException {
+		Assert.assertEquals(verifyFileTypeNameField(), true);
+	}
+	@Test(priority = 36)
+	public void verifyFileTypeStatusDD() throws InterruptedException {
+		Assert.assertEquals(checkFileTypeStatusDD(), true);
+	}
+	@Test(priority = 37)
+	public void verifyFileTypeEditLp() throws InterruptedException {
+		Assert.assertEquals(checkAddFileTypeEditLp(), true);
+	}
+	@Test(priority = 38)
+	public void verifyFileTypeStatus() throws InterruptedException {
+		Assert.assertEquals(checkFileTypeStatus(), true);
+	}
+	
+	@Test(priority = 39)
+	public void verifyInnovationTypeAddLp() throws InterruptedException {
+		Assert.assertEquals(checkAddInnoTypeAddLp(), true);
+	}
+	@Test(priority = 40)
+	public void verifyInnovationTypeFilter() throws InterruptedException {
+		Assert.assertEquals(checkInnoTypeFilter(), true);
+	}
+	@Test(priority = 41)
+	public void verifyInnoTypeEditFunctionality() throws InterruptedException {
+		Assert.assertEquals(checkInnoTypeEditFunctionality(), true);
+	}
+	
+	@Test(priority = 44)
+	public void verifyAdUnitWebsiteDdDataPopulation() throws InterruptedException {
+		Assert.assertEquals(checkAdUnitWebsiteDdDataPopulation(), true);
+	}
+	@Test(priority = 45,enabled=false)
+	public void verifyAdUnitSectionDdDataPopulation() throws InterruptedException {
+		Assert.assertEquals(checkAdUnitSectionDdDataPopulation(), true);
+	}
+	@Test(priority = 46)
+	public void verifyAdUnitSubSectionDdDataPopulation() throws InterruptedException {
+		Assert.assertEquals(checkAdUnitSubSectionDdDataPopulation(), true);
+	}
+	@Test(priority = 47)
+	public void verifyAdUnitEditFunctionality() throws InterruptedException {
+		Assert.assertEquals(checkEditAdunitFunctionality(), true);
+	}
+	@Test(priority = 48)
+	public void verifyAdUnitFilterFunctionality() throws InterruptedException {
+		Assert.assertEquals(checkAdunitFilterFunctionality(), true);
+	}
+	@Test(priority = 49)
+	public void verifyGoalPageLanding() throws InterruptedException {
+		Assert.assertEquals(checkGoalPageLanding(), true);
+	}
+	@Test(priority = 50)
+	public void verifyAddGoalFunctionality() throws InterruptedException {
+		Assert.assertEquals(checkAddGoalFunctionality(), true);
+	}
+	@Test(priority = 51)
+	public void verifyEditNewGoal() throws InterruptedException {
+		Assert.assertEquals(checkEditNewGoal(), true);
+	}
+	
+}

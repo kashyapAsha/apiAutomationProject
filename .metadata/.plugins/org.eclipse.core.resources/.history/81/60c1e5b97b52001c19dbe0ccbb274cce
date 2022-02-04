@@ -1,0 +1,35 @@
+package com.til.colombia.expresso.test.api;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.testng.annotations.Test;
+
+import com.til.colombia.expresso.apiConfig.ApiPath;
+import com.til.colombia.expresso.apiConfig.ApiVerification;
+import com.til.colombia.expresso.apiConfig.HttpMethods;
+import com.til.colombia.expresso.base.BaseTestSetup;
+
+import io.restassured.response.Response;
+
+public class DistributedInvoiceControllerTest extends BaseTestSetup {
+	public String baseURL= super.apiBaseURL;
+	
+	@Test
+	public void createDistributeInvoice() {
+        String url=baseURL+ApiPath.Post_Create_Distribute_Invoice;
+        
+        Map<String, String> map = new HashMap<String,String>();
+        map.put("invoiceId", "2226226");
+        map.put("type", "1");
+		
+		Response re= HttpMethods.postWithParam(map,access_Token, url);
+		re.prettyPrint();
+		ApiVerification.responseCodeValidation(re, 200);
+		//ApiVerification.responseKeyValidationFromJsonpath(re, url, url);
+		//ApiVerification.responseKeyValidationFromResponseBody(re, "clientName");
+		
+		
+	}
+
+}

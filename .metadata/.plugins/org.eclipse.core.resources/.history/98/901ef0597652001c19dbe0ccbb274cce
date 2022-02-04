@@ -1,0 +1,5 @@
+package com.til.colombia.expresso.test.api;
+
+public class DistributedInvoiceControllerTest {
+
+}

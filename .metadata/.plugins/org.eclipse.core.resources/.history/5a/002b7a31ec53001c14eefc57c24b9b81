@@ -1,0 +1,61 @@
+package com.til.colombia.expresso.test.api;
+
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.testng.annotations.Test;
+
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+
+import com.til.colombia.expresso.base.BaseTestSetup;
+import com.til.colombia.expresso.utility.ApiPath;
+import com.til.colombia.expresso.utility.ApiVerification;
+import com.til.colombia.expresso.utility.HttpMethods;
+import com.til.colombia.expresso.utility.JSONReader;
+
+import io.restassured.response.Response;
+
+public class DistributedInvoiceControllerTest extends BaseTestSetup {
+	public String baseURL= super.apiBaseURL;
+	
+	@Test
+	public void createDistributeInvoice() {
+        String url=baseURL+ApiPath.Post_Create_Distribute_Invoice;
+        
+        Map<String, String> param = new HashMap<String,String>();
+        param.put("invoiceId", "2229592");
+        param.put("type", "1");
+		
+		Response re= HttpMethods.postWithParam(param,access_Token, url);
+		re.prettyPrint();
+		ApiVerification.responseCodeValidation(re, 200);
+		if(!(re.jsonPath().get("error").equals("4"))) {
+			ApiVerification.responseKeyValidationFromJsonpath(re,"status", "3" );
+		}
+		else {
+			ApiVerification.responseKeyValidationFromJsonpath(re, "status", "4");
+		}
+			
+	}
+	
+	@Test
+	public void distributeDiscountOnLineitem() throws JsonIOException, JsonSyntaxException, FileNotFoundException {
+        String url=baseURL+ApiPath.Post_Distribute_Discount_On_Lineitem;
+        
+        Map<String, String> param = new HashMap<String,String>();
+        param.put("invoiceId", "1549085");
+        
+        Map<String, Object>body=new HashMap<String,Object>();
+		body=JSONReader.readJsonFile("distributedDiscountOnLineitem");
+		
+		Response re= HttpMethods.postWithParamAndBody(param, access_Token, body, url);
+		re.prettyPrint();
+		ApiVerification.responseCodeValidation(re, 200);
+		
+	}
+	
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;com.apiTesting.apiConfig&apos; to &apos;com.apiTesting.apiConfigs&apos;&#x0D;&#x0A;- Original project: &apos;DemoProject&apos;&#x0D;&#x0A;- Original element: &apos;DemoProject/src/test/java/com.apiTesting.apiConfig&apos;&#x0D;&#x0A;- Renamed element: &apos;DemoProject/src/test/java/com.apiTesting.apiConfigs&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;com.apiTesting.apiConfig&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src\/test\/java=/optional=/true=/=/maven.pomderived=/true=/=/test=/true=/&lt;com.apiTesting.apiConfig" name="com.apiTesting.apiConfigs" qualified="false" references="true" stamp="1639116777073" textual="false" version="1.0"/>
+</session>

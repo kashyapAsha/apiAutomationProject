@@ -1,0 +1,188 @@
+package com.til.colombia.expresso.test.regression;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.til.colombia.expresso.pageobjects.qa.AdminOrganizationPageObjects;
+
+public class AdminOrganisation extends  AdminOrganizationPageObjects{
+	
+	@Test(priority = 1)
+	public void VerifySearchPermission() throws InterruptedException {
+		Assert.assertEquals(verifySearchPermission(), true);
+	}
+
+	@Test(priority = 2)
+	public void VerifyEditPermission() throws InterruptedException {
+		Assert.assertEquals(verifyEditPermission(), true);
+	}
+
+	@Test(priority = 3)
+	public void VerifyChangePermissionFromActiveToInactive() throws InterruptedException {
+		Assert.assertEquals(verifyChangePermission(), true);
+	}
+	
+	@Test(priority = 4)
+	public void VerifyDuplicatePermissionNotAdded() throws InterruptedException {
+		Assert.assertEquals(verifyDuplicatePermissionNotAdded(), true);
+	}
+
+	@Test(priority = 5)
+	public void VerifyCancelButtonRedirectsToAddPermissionScreen() throws InterruptedException {
+		Assert.assertEquals(verifyCancelButtonRedirectionToViewPermissionScreen(), true);
+	}
+	
+	@Test(priority = 6)
+	public void  VerifyAddNewRoleFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyAddRolePermission(), true);
+	}
+	@Test(priority = 7,enabled=false)
+	public void  VerifyMandatoryFieldOnAddRoleScreen() throws InterruptedException {
+		Assert.assertEquals(verifyAddRolePage(), true);
+	}
+	@Test(priority = 8)
+	public void  VerifyEditRoleFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyEditRolePage(), true);
+	}
+	@Test(priority = 9,enabled=false)
+	public void  VerifySearchFeatureOfRoleScreen() throws InterruptedException {
+		Assert.assertEquals(verifySearchRoleLp(), true);
+	}
+	@Test(priority = 10,enabled=false)
+	public void  VerifyDuplicateRoleNotAdded() throws InterruptedException {
+		Assert.assertEquals(verifyDuplicateRoleNotAdded(), true);
+	}
+
+	@Test(priority = 11,enabled=false)
+	public void  VerifyAddNewLOBFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyAddLOBPermission(), true);
+	}	
+	@Test(priority = 12,enabled=false) 
+	public void  VerifyEditLOBFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyEditLOB(), true);
+	}
+	@Test(priority = 13,enabled=false)
+	public void  VerifySearchFeatureOfLOBScreen() throws InterruptedException {
+		Assert.assertEquals(verifySearchLOBLp(), true);
+	}
+	@Test(priority = 14,enabled=false)
+	public void  VerifyDuplicateLOBNotAdded() throws InterruptedException {
+		Assert.assertEquals(verifyDuplicateLOBNotAdded(), true);
+	}
+	@Test(priority = 15,enabled=false)
+	public void VerifyCancelButtonRedirectsToAddLObScreen() throws InterruptedException {
+		Assert.assertEquals(verifyCancelButtonRedirectionToViewLOBScreen(), true);
+	}
+	
+	@Test(priority = 16,enabled=false)
+	public void  VerifyAddNewGroupFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyAddGroupPermission(), true);
+	}
+	@Test(priority = 17,enabled=false)
+	public void  VerifyEditGroupFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyEditGroup(), true);
+	}
+	@Test(priority = 18,enabled=false)
+	public void  VerifyDuplicateGroupNotAllowed() throws InterruptedException {
+		Assert.assertEquals(verifyDuplicateGroupNotAdded(), true);
+	}
+	@Test(priority = 19,enabled=false)
+	public void  VerifySearchFeatureOfGroupScreen() throws InterruptedException {
+		Assert.assertEquals(verifyFilterGroup(), true);
+	}
+	@Test(priority = 20,enabled=false)
+	public void  VerifyAddNewPropertyFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyAddPropertyPermission(), true);
+	}
+	@Test(priority = 21,enabled=false)
+	public void  VerifySearchFeatureOfExpressoPropertyScreen() throws InterruptedException {
+		Assert.assertEquals(verifySearchExpressoProperty(), true);
+	}
+	
+	@Test(priority = 22,enabled=false)
+	public void  VerifyPaginationOfExpressoPropertyScreen() throws InterruptedException {
+		Assert.assertEquals(checkPaginationOfExpressoProperty(), true);
+	}
+    @Test(priority = 23,enabled=false)
+	public void  VerifyAddForecastFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyAddForcast(), true);
+	}
+	@Test(priority = 24)
+	public void  VerifyAddNewUserFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyAddNewUser(), true);
+	}
+	
+	@Test(priority = 25)
+	public void  VerifyEditUserFunctionality() throws InterruptedException {
+		Assert.assertEquals(verifyEditUser(), true);
+	}
+
+	@Test(priority = 26,enabled=false)
+	public void VerifyCancelButtonOnAddEditUserScreenRedirectsToUsersScreen() throws InterruptedException {
+		Assert.assertEquals(verifyRedirectionFromAddUserToViewUsers(), true);
+	}
+	@Test(priority = 27)
+	public void  VerifySearchFeatureOfUserScreen() throws InterruptedException {
+		Assert.assertEquals(verifySearchUser(), true);
+	}
+	
+	@Test(priority = 28)
+	public void  VerifyUserAbleToMapRole() throws InterruptedException {
+		Assert.assertEquals(verifyRoleMappingByUser("Map Role"), true);
+	}
+	
+	@Test(priority = 29)
+	public void  VerifyUserAbleToUnMapRole() throws InterruptedException {
+		Assert.assertEquals(verifyRoleMappingByUser("Unmap Role"), true);
+	}
+	
+   @Test(priority = 30)
+	public void  VerifyUserAbleToMapLob() throws InterruptedException {
+		Assert.assertEquals(verifyLOBMappingByUser("Map LOB"), true);
+	}
+	@Test(priority = 31)
+	public void  VerifyUserAbleToUnMapLob() throws InterruptedException {
+		Assert.assertEquals(verifyLOBMappingByUser("Unmap LOB"), true);
+	}
+	
+	@Test(priority = 32)
+	public void  VerifyUserAbleToUnMapGroup() throws InterruptedException {
+		Assert.assertEquals(verifyGroupMappingByUser("Unmap Groups"), true);
+	}
+	
+	@Test(priority = 33)
+	public void  VerifyUserAbleToMapGroup() throws InterruptedException {
+		Assert.assertEquals(verifyGroupMappingByUser("Map Groups"), true);
+	}
+	
+	@Test(priority = 34) 
+	public void  VerifyUserAbleToMapUserClientMapping() throws InterruptedException {
+		Assert.assertEquals(verifyUserClientMapping("Map Client"), true);
+	}
+	
+	@Test(priority = 35)
+	public void  VerifyUserAbleToUnMapUserClientMapping() throws InterruptedException {
+		Assert.assertEquals(verifyUserClientMapping("Unmap Client"), true);
+	}
+	
+	@Test(priority = 36)  
+	public void  VerifyUserAbleToMapParentUser() throws InterruptedException {
+		Assert.assertEquals(verifyParentUserMapping("Map Parent"), true);
+	}
+	@Test(priority = 37) 
+	public void  VerifyUserAbleToChangeParentUser() throws InterruptedException {
+		Assert.assertEquals(verifyParentUserMapping("Change Parent"), true);
+	}
+	
+	@Test(priority = 38)
+	public void VerifyGroupAndRoleFilterOnUsers() throws InterruptedException {
+		Assert.assertEquals(verifyUserFilter(), true);
+	}
+	
+	@Test(priority = 39)
+	public void VerifyCheckBoxesOnUsersScreen() throws InterruptedException {
+		Assert.assertEquals(verifyCheckboxOnUserScreen(), true);
+	}
+	
+	
+}

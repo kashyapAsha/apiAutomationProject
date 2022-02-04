@@ -1,0 +1,98 @@
+package com.til.colombia.expresso.apiConfig;
+import java.util.Map;
+
+
+//import com.aventstack.extentreports.Status;
+import com.til.colombia.expresso.base.BaseTestSetup;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class HttpMethods extends BaseTestSetup {
+	//all https methods
+	// get method without parameters
+	public static Response getWithoutParam(String url) {
+		Response res=null;
+		try {
+			res=RestAssured.given().log().all()
+					.when().get(url);
+			//test.log(Status.PASS,"Successfully getting the response");
+		} catch (Exception e) {
+			//test.log(Status.FAIL, e.fillInStackTrace());
+			LOGGER.error(e.fillInStackTrace());
+		}
+		return res;
+		
+	}
+	// get method with query parameters
+	public static Response getWithQueryParam(String url, String key, String id) {
+		Response res=null;
+		 try {
+			res=RestAssured.given().queryParams(key, id)
+					.log().all()
+					.when().get(url);
+		//	test.log(Status.PASS,"Successfully getting the response");
+		} catch (Exception e) {
+			//test.log(Status.FAIL, e.fillInStackTrace());
+			LOGGER.error(e.fillInStackTrace());
+		}
+		return res;
+	}
+	//post method
+	public static Response post(String url, Map<String, String> m) {
+		Response res=null;
+		 try {
+			res=RestAssured.given()
+					.log().all()
+					.body(m)
+					.when().post(url);
+			//test.log(Status.PASS,"Successfully getting the response");
+		} catch (Exception e) {
+			//test.log(Status.FAIL, e.fillInStackTrace());
+			LOGGER.error(e.fillInStackTrace());
+		}
+		return res;
+	}
+	//get method with bearer auth
+	public static Response getWithAuthentication(String token,String url) {
+		Response res=null;
+		try {
+			res=RestAssured.given().header("Authorization", "Bearer "+token).log().all()
+					.when().get(url);
+		
+			//test.log(Status.PASS,"Successfully getting the response");
+			//LOGGER.info("Successfully getting the response");
+		} catch (Exception e) {
+		//	test.log(Status.FAIL, e.fillInStackTrace());
+			LOGGER.error(e.fillInStackTrace());
+		}
+		return res;
+		
+	}
+	
+	public static Response postWithParam(Map<String, String> map,String token,String url) {
+		Response res=null;
+		 try {
+			res=RestAssured.given().param(map)
+					.header("Authorization", "Bearer "+token)
+					.log().all()
+					.when().post(url);
+			//test.log(Status.PASS,"Successfully getting the response");
+		} catch (Exception e) {
+			//test.log(Status.FAIL, e.fillInStackTrace());
+			LOGGER.error(e.fillInStackTrace());
+		}
+		return res;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

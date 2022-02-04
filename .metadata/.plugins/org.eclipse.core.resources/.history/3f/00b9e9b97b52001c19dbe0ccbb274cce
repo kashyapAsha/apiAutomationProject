@@ -1,0 +1,58 @@
+package com.til.colombia.expresso.test.api;
+
+
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+
+//import com.aventstack.extentreports.Status;
+import com.til.colombia.expresso.apiConfig.ApiPath;
+import com.til.colombia.expresso.apiConfig.ApiVerification;
+import com.til.colombia.expresso.apiConfig.HttpMethods;
+import com.til.colombia.expresso.base.BaseTestSetup;
+//import com.til.colombia.expresso.utility.ReadPropertyFile;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class SeconTest extends BaseTestSetup {
+	public String baseURL= super.apiBaseURL;
+	//public String access_Token="";
+	
+	//@BeforeTest
+	//public void getToken() {
+		//access_Token=getAccessToken();
+	//}
+	
+	@Test()
+	public void getAllFinancialYear() {
+		//test.log(Status.INFO, "getAllFinancialYear test is starting......");
+		
+		String url=baseURL+ApiPath.Get_All_Financial_Year;
+		
+		Response re= HttpMethods.getWithAuthentication(access_Token, url);
+		re.prettyPrint();
+		
+		ApiVerification.responseCodeValidation(re, 200);
+		ApiVerification.responseKeyValidationFromResponseBody(re, "2021");
+		//test.log(Status.INFO, "getAllFinancialYear test is end......");
+	}
+	
+	@Test
+	public void createCustomizeInvoice() {
+		//test.log(Status.INFO, "createCustomizeInvoice test is starting......");
+		String url=baseURL+ApiPath.Post_Create_CustomizeInvoice;
+		
+		/*Response re= HttpMethods.postWithParam("invoiceId", "2231765",access_Token, url);
+		re.prettyPrint();
+		ApiVerification.responseCodeValidation(re, 200);
+		ApiVerification.responseKeyValidationFromJsonpath(re, "invoice.clientName","RICHEMONT");
+		ApiVerification.responseKeyValidationFromResponseBody(re, "clientName");
+		
+		//test.log(Status.INFO, "createCustomizeInvoice test is end......");*/
+		
+	}
+
+}

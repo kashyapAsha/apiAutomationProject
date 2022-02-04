@@ -1,0 +1,24 @@
+{
+      "distributedDiscountOnLineitem":
+     {
+  "autoApprovalType": 0,
+  "autoCSApproveDate": "\"2021-09-01T05:53:06.711Z\"",
+  "autoFinApproveDate":"\"2021-09-01T05:53:06.711Z\"",
+  "billClientId": 2821,
+  "clientId": 2821,
+  "comment": "string1",
+  "discountAmount": 200,
+  "invoiceDateStr": "\"2013-12-01\"",
+  "invoiceId": 1549085,
+  "isSez": 0,
+  "reverseBase": 0,
+  "roId": 8418,
+  "statusType": 0
+}
+      
+      
+      
+      
+      
+      
+    }  
